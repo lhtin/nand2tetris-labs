@@ -43,4 +43,28 @@ CHIP ALU {
 
     PARTS:
    // Put you code here:
+    
+    Mux16(a=x, b[0..15]=false, sel=zx, out=x1);
+    Not16(in=x1, out=nx1);
+    Mux16(a=x1, b=nx1, sel=nx, out=x2);
+    
+    Mux16(a=y, b[0..15]=false, sel=zy, out=y1);
+    Not16(in=y1, out=ny1);
+    Mux16(a=y1, b=ny1, sel=ny, out=y2);
+    
+    And16(a=x2, b=y2, out=r1);
+    Add16(a=x2, b=y2, out=r2);
+    Mux16(a=r1, b=r2, sel=f, out=r3);
+    
+    Not16(in=r3, out=nr3);
+    
+    Mux16(a=r3, b=nr3, sel=no, out[15]=t1, out=t2, out[15]=ng, out=out);
+    
+    // 如果out的最高位为0且加上11111之后最高位为1，则说明out为0
+    // 满足两个条件：
+    //   1. 0 不为负数，即0的最高位为0
+    //   2. 0 + -1 为 负数，即0 + -1的最高位为1
+    Not(in=t1, out=t3);
+    Add16(a=t2, b[0..15]=true, out[15]=t4);
+    And(a=t3, b=t4, out=zr);
 }

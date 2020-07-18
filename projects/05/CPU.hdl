@@ -40,4 +40,44 @@ CHIP CPU {
 
     PARTS:
     // Put your code here:
+    
+    // A类指令选择instruction，C类指令选择ALU的计算结果
+    Mux16(a=instruction, b=ALUOut, sel=instruction[15], out=AIn);
+    
+    // 为A类指令 或者 C类指令且d1=1
+    Not(in=instruction[15], out=isA);
+    Or(a=isA, b=instruction[5], out=ALoad);
+    ARegister(in=AIn, load=ALoad, out=AOut, out[0..14]=addressM);
+    
+    // 为C类指令且d2=1
+    And(a=instruction[15], b=instruction[4], out=DLoad);
+    DRegister(in=ALUOut, load=DLoad, out=DOut);
+    
+    // 为C类指令且a=1
+    And(a=instruction[15], b=instruction[12], out=sel1);
+    Mux16(a=AOut, b=inM, sel=sel1, out=ALUIn2);
+    
+    And(a=instruction[15], b=instruction[11], out=zx);
+    And(a=instruction[15], b=instruction[10], out=nx);
+    And(a=instruction[15], b=instruction[9], out=zy);
+    And(a=instruction[15], b=instruction[8], out=ny);
+    And(a=instruction[15], b=instruction[7], out=f);
+    And(a=instruction[15], b=instruction[6], out=no);
+    ALU(x=DOut, y=ALUIn2, zx=zx, nx=nx, zy=zy, ny=ny, f=f, no=no, out=outM, out=ALUOut, ng=ng, zr=zr);
+    
+    // C指令且d3=1
+    And(a=instruction[15], b=instruction[3], out=writeM);
+    
+    // j1&ng
+    And(a=instruction[2], b=ng, out=lt);
+    // j2&zr
+    And(a=instruction[1], b=zr, out=eq);
+    // j3&!(ng|zr)
+    Or(a=ng, b=zr, out=t1);
+    Not(in=t1, out=postive);
+    And(a=instruction[0], b=postive, out=gt);
+    Or(a=lt, b=eq, out=t2);
+    Or(a=t2, b=gt, out=t3);
+    And(a=instruction[15], b=t3, out=PCLoad);
+    PC(in=AOut, load=PCLoad, inc=true, reset=reset, out[0..14]=pc);
 }

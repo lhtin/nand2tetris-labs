@@ -14,4 +14,8 @@ CHIP FullAdder {
 
     PARTS:
     // Put you code here:
+    HalfAdder(a=a, b=b, sum=tsum, carry=carry1);
+    HalfAdder(a=c, b=tsum, sum=sum, carry=carry2);
+    // carry1和carry2不可能同时为1
+    Xor(a=carry1, b=carry2, out=carry);
 }
