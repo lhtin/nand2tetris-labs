@@ -1,0 +1,150 @@
+  // push constant 0
+  @0
+  D=A
+  @SP
+  A=M
+  M=D
+  @SP
+  M=M+1
+  // pop local 0
+  @0
+  D=A
+  @LCL
+  D=M+D
+  @addr.0
+  M=D
+  @SP
+  M=M-1
+  A=M
+  D=M
+  @addr.0
+  A=M
+  M=D
+  // label LOOP_START
+(undefined$LOOP_START)
+  // push argument 0
+  @0
+  D=A
+  @ARG
+  A=M+D
+  D=M
+  @SP
+  A=M
+  M=D
+  @SP
+  M=M+1
+  // push local 0
+  @0
+  D=A
+  @LCL
+  A=M+D
+  D=M
+  @SP
+  A=M
+  M=D
+  @SP
+  M=M+1
+  // add
+  @SP
+  M=M-1
+  A=M
+  D=M
+  @SP
+  M=M-1
+  A=M
+  D=M+D
+  @SP
+  A=M
+  M=D
+  @SP
+  M=M+1
+  // pop local 0
+  @0
+  D=A
+  @LCL
+  D=M+D
+  @addr.1
+  M=D
+  @SP
+  M=M-1
+  A=M
+  D=M
+  @addr.1
+  A=M
+  M=D
+  // push argument 0
+  @0
+  D=A
+  @ARG
+  A=M+D
+  D=M
+  @SP
+  A=M
+  M=D
+  @SP
+  M=M+1
+  // push constant 1
+  @1
+  D=A
+  @SP
+  A=M
+  M=D
+  @SP
+  M=M+1
+  // sub
+  @SP
+  M=M-1
+  A=M
+  D=M
+  @SP
+  M=M-1
+  A=M
+  D=M-D
+  @SP
+  A=M
+  M=D
+  @SP
+  M=M+1
+  // pop argument 0
+  @0
+  D=A
+  @ARG
+  D=M+D
+  @addr.2
+  M=D
+  @SP
+  M=M-1
+  A=M
+  D=M
+  @addr.2
+  A=M
+  M=D
+  // push argument 0
+  @0
+  D=A
+  @ARG
+  A=M+D
+  D=M
+  @SP
+  A=M
+  M=D
+  @SP
+  M=M+1
+  // if-goto LOOP_START
+  @SP
+  M=M-1
+  A=M
+  D=M
+  @undefined$LOOP_START
+  D;JNE
+  // push local 0
+  @0
+  D=A
+  @LCL
+  A=M+D
+  D=M
+  @SP
+  A=M
+  M=D
+  @SP
+  M=M+1
