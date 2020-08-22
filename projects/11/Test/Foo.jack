@@ -1,0 +1,11 @@
+class Foo {
+    field int a, b, c;
+    static int x, y, z;
+    constructor Foo new () {
+        let a = bar(1,2);
+        return this;
+    }
+    method int bar(int a1, int a2) {
+      return a1 + a2;
+    }
+}
