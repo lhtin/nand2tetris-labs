@@ -1,0 +1,141 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/12/Math.jack
+
+/**
+ * A library of commonly used mathematical functions.
+ * Note: Jack compilers implement multiplication and division using OS method calls.
+ */
+class Math {
+
+    static Array twoToTheI;
+    /** Initializes the library. */
+    function void init() {
+        let twoToTheI = Array.new(16);
+        let twoToTheI[0] = 1;       // 0000000000000001
+        let twoToTheI[1] = 2;       // 0000000000000010
+        let twoToTheI[2] = 4;       // 0000000000000100
+        let twoToTheI[3] = 8;       // 0000000000001000
+        let twoToTheI[4] = 16;      // 0000000000010000
+        let twoToTheI[5] = 32;      // 0000000000100000
+        let twoToTheI[6] = 64;      // 0000000001000000
+        let twoToTheI[7] = 128;     // 0000000010000000
+        let twoToTheI[8] = 256;     // 0000000100000000
+        let twoToTheI[9] = 512;     // 0000001000000000
+        let twoToTheI[10] = 1024;   // 0000010000000000
+        let twoToTheI[11] = 2048;   // 0000100000000000
+        let twoToTheI[12] = 4096;   // 0001000000000000
+        let twoToTheI[13] = 8192;   // 0010000000000000
+        let twoToTheI[14] = 16384;  // 0100000000000000
+        // 注意，如果写成-32768，则课程提供的编译器会提示Integer constant to big，感觉是一个bug，整数应该要支持的范围为 -32768~32767
+        let twoToTheI[15] = ~32767; // 1000000000000000
+        return;
+    }
+
+    /** Returns the absolute value of x. */
+    function int abs(int x) {
+        if (x < 0) {
+            return -x;
+        } else {
+            return x;
+        }
+    }
+
+    function boolean bit(int x, int i) {
+        return ~(twoToTheI[i] & x = 0);
+    }
+
+    /** Returns the product of x and y.
+     *  When a Jack compiler detects the multiplication operator '*' in the
+     *  program's code, it handles it by invoking this method. In other words,
+     *  the Jack expressions x*y and multiply(x,y) return the same value.
+     */
+    function int multiply(int x, int y) {
+        var int sum, shiftedX, n;
+        let sum = 0;
+        let shiftedX = x;
+        let n = 0;
+        while (~(n > 15)) {
+            if (Math.bit(y, n)) { // 1011100110110000， 14768
+                // y的第n位为1，说明shiftedX需要加起来
+                let sum = sum + shiftedX;
+            }
+            let shiftedX = shiftedX + shiftedX; // 计算下一位对应的数值（即当前的两倍）
+            let n = n + 1;
+        }
+        return sum;
+    }
+
+    function int divide0(int x, int y) {
+        var int q, c;
+        if (y > x) {
+            return 0;
+        }
+        let q = Math.divide0(x, 2 * y);
+        // 必须加括号，因为Jack编译器不支持*/的优先级高于+-，而是按照顺序来计算
+        let c = x - (2 * q * y);
+        if (c < y) {
+            // x / (2 * y) = q 余 c
+            // c < y，说明x / y => 2 * q 余 c
+            return 2 * q;
+        } else {
+            // c >= y，说明 x / y => 2 * q + 1 余 c - y
+            return (2 * q) + 1;
+        }
+    }
+    /** Returns the integer part of x/y.
+     *  When a Jack compiler detects the multiplication operator '/' in the
+     *  program's code, it handles it by invoking this method. In other words,
+     *  the Jack expressions x/y and divide(x,y) return the same value.
+     */
+    function int divide(int x, int y) {
+        var int absX, absY, result;
+        var boolean isNeg;
+        let isNeg = (x < 0 & y > 0) | (x > 0 & y < 0);
+        let absX = Math.abs(x);
+        let absY = Math.abs(y);
+        let result = Math.divide0(absX, absY);
+        if (isNeg) {
+            return -result;
+        } else {
+            return result;
+        }
+    }
+
+    // 9
+    /** Returns the integer part of the square root of x. */
+    function int sqrt(int x) {
+        var int y, n, t;
+        let y = 0;
+        let n = 7; // 2^7 * 2^7 = 16384
+        while (~(n < 0)) {
+            let t = y + twoToTheI[n];
+            let t = t * t;
+            // 0 <= t <= x
+            if (~(t > x) & ~(t < 0)) {
+                let y = y + twoToTheI[n];
+            }
+            let n = n - 1;
+        }
+        return y;
+    }
+
+    /** Returns the greater number. */
+    function int max(int a, int b) {
+        if (a < b) {
+            return b;
+        } else {
+            return a;
+        }
+    }
+
+    /** Returns the smaller number. */
+    function int min(int a, int b) {
+        if (a > b) {
+            return b;
+        } else {
+            return a;
+        }
+    }
+}
