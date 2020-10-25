@@ -1,0 +1,107 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/12/Memory.jack
+
+/**
+ * This library provides two services: direct access to the computer's main
+ * memory (RAM), and allocation and recycling of memory blocks. The Hack RAM
+ * consists of 32,768 words, each holding a 16-bit binary number.
+ */ 
+class Memory {
+
+    static Array ram;
+    static Array heap;
+    static Array free;
+
+    /** Initializes the class. */
+    function void init() {
+        let ram = 0;
+        let heap = 2048;
+        let heap[0] = 0;
+        let heap[1] = 14335;
+        let free = heap;
+        return;
+    }
+
+    /** Returns the RAM value at the given address. */
+    function int peek(int address) {
+        return ram[address];
+    }
+
+    /** Sets the RAM value at the given address to the given value. */
+    function void poke(int address, int value) {
+        let ram[address] = value;
+        return;
+    }
+
+    function void defrag() {
+        var Array list, temp;
+        let list = free;
+        while (list > 0 & list[0] > 0) {
+            if (list[0] = list + list[1] + 2) {
+                let temp = list[0];
+                let list[1] = list[1] + temp[1] + 2;
+            } else {
+                let list = list[0];
+            }
+        }
+        return;
+    }
+
+    /** Finds an available RAM block of the given size and returns
+     *  a reference to its base address.
+     *  返回0表示分配失败 */
+    function int alloc(int size) {
+        var Array addr, list;
+
+        if (free = 0) {
+          return 0;
+        }
+
+        // 第一次寻找可用空间
+        let list = free;
+        while (list > 0 & list[1] < size + 2) {
+            let list = list[0];
+        }
+
+        // 没有找到，尝试进行碎片整理
+        if (list = 0) {
+            do Memory.defrag();
+        }
+
+        // 再次寻找可用空间
+        let list = free;
+        while (list > 0 & list[1] < size + 2) {
+            let list = list[0];
+        }
+
+        // 还是没有找到
+        if (list = 0) {
+            return 0;
+        }
+
+        let addr = list + 2 + list[1] - size ;
+        let addr[-1] = size;
+        let list[1] = list[1] - size - 2;
+        return addr;
+    }
+
+    /** De-allocates the given object (cast as an array) by making
+     *  it available for future allocations. */
+    function void deAlloc(Array o) {
+        var Array list;
+        let list = free;
+        while (list > 0) {
+            if (list[0] > o) {
+                let o[-2] = list[0];
+                let list[0] = o - 2;
+                // 合并完之后进行碎片整理
+                do Memory.defrag();
+                return;
+            }
+            let list = list[0];
+        }
+        return;
+    }
+}

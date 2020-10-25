@@ -28,8 +28,8 @@ class Math {
         let twoToTheI[12] = 4096;   // 0001000000000000
         let twoToTheI[13] = 8192;   // 0010000000000000
         let twoToTheI[14] = 16384;  // 0100000000000000
-        // 注意，如果写成-32768，则课程提供的编译器会提示Integer constant to big，感觉是一个bug，整数应该要支持的范围为 -32768~32767
-        let twoToTheI[15] = ~32767; // 1000000000000000
+        // 注意，如果写成-32768，则课程提供的编译器会提示Integer constant to big。感觉是一个bug，因为整数应该要支持的范围为 -32768~32767
+        let twoToTheI[15] = ~32767; // ~0111111111111111 = 1000000000000000
         return;
     }
 
@@ -43,7 +43,7 @@ class Math {
     }
 
     function boolean bit(int x, int i) {
-        return ~(twoToTheI[i] & x = 0);
+        return ~((twoToTheI[i] & x) = 0);
     }
 
     /** Returns the product of x and y.
