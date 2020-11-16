@@ -1,0 +1,161 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/12/Screen.jack
+
+/**
+ * A library of functions for displaying graphics on the screen.
+ * The Hack physical screen consists of 512 rows (indexed 0..511, top to bottom)
+ * of 256 pixels each (indexed 0..255, left to right). The top left pixel on
+ * the screen is indexed (0,0).
+ */
+class Screen {
+
+    static boolean color;
+    static Array screen;
+    static int len;
+    static Array twoToTheI;
+
+    /** Initializes the Screen. */
+    function void init() {
+        let twoToTheI = Array.new(16);
+        let twoToTheI[0] = 1;       // 0000000000000001
+        let twoToTheI[1] = 2;       // 0000000000000010
+        let twoToTheI[2] = 4;       // 0000000000000100
+        let twoToTheI[3] = 8;       // 0000000000001000
+        let twoToTheI[4] = 16;      // 0000000000010000
+        let twoToTheI[5] = 32;      // 0000000000100000
+        let twoToTheI[6] = 64;      // 0000000001000000
+        let twoToTheI[7] = 128;     // 0000000010000000
+        let twoToTheI[8] = 256;     // 0000000100000000
+        let twoToTheI[9] = 512;     // 0000001000000000
+        let twoToTheI[10] = 1024;   // 0000010000000000
+        let twoToTheI[11] = 2048;   // 0000100000000000
+        let twoToTheI[12] = 4096;   // 0001000000000000
+        let twoToTheI[13] = 8192;   // 0010000000000000
+        let twoToTheI[14] = 16384;  // 0100000000000000
+        // 注意，如果写成-32768，则课程提供的编译器会提示Integer constant to big。感觉是一个bug，因为整数应该要支持的范围为 -32768~32767
+        let twoToTheI[15] = ~32767; // ~0111111111111111 = 1000000000000000
+        let color = true;
+        let screen = 16384;
+        let len = 8192;
+        return;
+    }
+
+    /** Erases the entire screen. */
+    function void clearScreen() {
+        return;
+    }
+
+    /** Sets the current color, to be used for all subsequent drawXXX commands.
+     *  Black is represented by true, white by false. */
+    function void setColor(boolean b) {
+        let color = b;
+        return;
+    }
+
+    /** Draws the (x,y) pixel, using the current color. 0 <= x <= 511, 0 <= y <= 255 */
+    function void drawPixel(int x, int y) {
+        var int val, x0, addr, index;
+        let addr = 16384 + (y * 32) + (x / 16);
+        let val = Memory.peek(addr);
+        // do Output.printInt(val); do Output.println();
+        let index = x - ((x / 16) * 16);
+        // do Output.printInt(index); do Output.println();
+        let x0 = twoToTheI[index];
+        // do Output.printInt(x0); do Output.println();
+        if (color) {
+            let val = val | x0; // 变为1
+        } else {
+            let val = val & (~x0); // 变为0
+        }
+        // do Output.printInt(val); do Output.println();
+        do Memory.poke(addr, val);
+        return;
+    }
+
+    /** Draws a line from pixel (x1,y1) to pixel (x2,y2), using the current color. */
+    function void drawLine(int x1, int y1, int x2, int y2) {
+        var int dx, dy, a, b, adyMinusbdx, temp, adjustX, adjustY;
+        var boolean rate;
+        if (x2 < x1) {
+            let temp = x1;
+            let x1 = x2;
+            let x2 = temp;
+            let temp = y1;
+            let y1 = y2;
+            let y2 = temp;
+        }
+
+        let a = 0;
+        let b = 0;
+        let adyMinusbdx = 0;
+
+        let dx = x2 - x1;
+        let dy = y2 - y1;
+        let rate = dx > Math.abs(dy);
+
+        if (dy > 0) {
+            // a <= dx, b <= dy
+            while (~(a > dx) & ~(b > dy)) {
+                do Screen.drawPixel(x1 + a, y1 + b);
+                if ((adyMinusbdx < 0) | ((adyMinusbdx = 0) & rate)) {
+                    let a = a + 1;
+                    let adyMinusbdx = adyMinusbdx + dy;
+                } else {
+                    let b = b + 1;
+                    let adyMinusbdx = adyMinusbdx - dx;
+                }
+            }
+        } else {
+            // a <= dx, b >= dy
+            while (~(a > dx) & ~(b < dy)) {
+                do Screen.drawPixel(x1 + a, y1 + b);
+                if ((adyMinusbdx < 0) | ((adyMinusbdx = 0) & rate)) {
+                    let a = a + 1;
+                    let adyMinusbdx = adyMinusbdx - dy;
+                } else {
+                    let b = b - 1;
+                    let adyMinusbdx = adyMinusbdx - dx;
+                }
+            }
+        }
+
+        return;
+    }
+
+    /** Draws a filled rectangle whose top left corner is (x1, y1)
+     * and bottom right corner is (x2,y2), using the current color. */
+    function void drawRectangle(int x1, int y1, int x2, int y2) {
+        var int temp, x;
+        if (x2 < x1) {
+            let temp = x1;
+            let x1 = x2;
+            let x2 = temp;
+            let temp = y1;
+            let y1 = y2;
+            let y2 = temp;
+        }
+        let x = x1;
+        // x <= x2
+        while (~(x > x2)) {
+            do Screen.drawLine(x, y1, x, y2);
+            let x = x + 1;
+        }
+        return;
+    }
+
+    /** Draws a filled circle of radius r<=181 around (x,y), using the current color. */
+    function void drawCircle(int x, int y, int r) {
+        var int dy, dx, r2;
+        let dy = -r;
+        let r2 = r * r;
+        // dy <= r
+        while (~(dy > r)) {
+            let dx = Math.sqrt(r2 - (dy * dy));
+            do Screen.drawLine(x - dx, y + dy, x + dx, y + dy);
+            let dy = dy + 1;
+        }
+        return;
+    }
+}
