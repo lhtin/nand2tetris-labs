@@ -488,13 +488,15 @@ class Matrix {
     const snapshot = []
     const list = this._getList()
     // console.log(list)
-    for (let y = this.MAX_Y; y >= this.MIN_Y; y -= 1) {
+    for (let y = this.MIN_Y; y <= this.MAX_Y; y += 1) {
       const row = []
       for (let x = this.MIN_X; x <= this.MAX_X; x += 1) {
         let bit = 0
         if (this.table[x][y]) {
+          // 固定的方块占位
           bit = 1
         } else if (list.some(({x: x1, y: y1}) => x1 === x && y1 === y)) {
+          // 在移动中的方块
           bit = 2
         }
         row.push({
@@ -616,8 +618,8 @@ class TetrisEngine {
     for (let y = 0; y < list.length; y += 1) {
       for (let x = 0; x < list[y].length; x += 1) {
         const info = list[y][x]
-        const x0 = x * A + A / 2
-        const y0 = y * A + A / 2
+        const x0 = (info.x - 1) * A + A / 2
+        const y0 = (22 - info.y) * A + A / 2
         if ((info.bit === 1 || info.bit === 2) && info.y <= 20) {
           ctx.fillStyle = info.bit === 2 ? 'black' : 'gray'
           ctx.fillRect(x0 - A * 0.4, y0 - A * 0.4, A - 2, A - 2)
