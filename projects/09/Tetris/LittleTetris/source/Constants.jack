@@ -1,0 +1,775 @@
+class Constants {
+    // Phases
+    function int getGeneration() {
+        return 0;
+    }
+    function int getFalling() {
+        return 1;
+    }
+    function int getLock() {
+        return 2;
+    }
+    function int getPattern() {
+        return 3;
+    }
+    function int getIterate() {
+        return 4;
+    }
+    function int getAnimate() {
+        return 5;
+    }
+    function int getEliminate() {
+        return 6;
+    }
+    function int getCompletion() {
+        return 7;
+    }
+    function int getPause() {
+        return 8;
+    }
+    function int getOver() {
+        return 9;
+    }
+    function int getSuccess() {
+        return 10;
+    }
+
+    // TetriminoTypes
+    function int getO() {
+        return 0;
+    }
+    function int getI() {
+        return 1;
+    }
+    function int getT() {
+        return 2;
+    }
+    function int getL() {
+        return 3;
+    }
+    function int getJ() {
+        return 4;
+    }
+    function int getS() {
+        return 5;
+    }
+    function int getZ() {
+        return 6;
+    }
+
+    // TetriminoFacings
+    function int getNorth() {
+        return 0;
+    }
+    function int getEast() {
+        return 1;
+    }
+    function int getSouth() {
+        return 2;
+    }
+    function int getWest() {
+        return 3;
+    }
+
+    // TetriminoPoints
+    function int getPoint1() {
+        return 0;
+    }
+    function int getPoint2() {
+        return 1;
+    }
+    function int getPoint3() {
+        return 2;
+    }
+    function int getPoint4() {
+        return 3;
+    }
+    function int getPoint5() {
+        return 4;
+    }
+
+    // RotateDirections
+    function int getClockwise() {
+        return 0;
+    }
+    function int getCounterclockwise() {
+        return 1;
+    }
+
+    // MoveDirections
+    function int getLeft() {
+        return 0;
+    }
+    function int getRight() {
+        return 1;
+    }
+
+    // PerMinosXYOffsetOfPoint1XY
+    function Array getDeltaList(XY d1, XY d2, XY d3, XY d4) {
+        var Array DList;
+        let DList = Array.new(4);
+        let DList[0] = d1;
+        let DList[1] = d2;
+        let DList[2] = d3;
+        let DList[3] = d4;
+        return DList;
+    }
+    function Array getDList(int type, int facing, int x, int y) {
+        if (type = Constants.getO()) {
+            if (facing = Constants.getNorth()) {
+                return  Constants.getDeltaList(
+                    XY.new(0 + x, 0 + y),
+                    XY.new(0 + x, 1 + y),
+                    XY.new(1 + x, 1 + y),
+                    XY.new(1 + x, 0 + y)
+                );
+            }
+            if (facing = Constants.getEast()) {
+                return  Constants.getDeltaList(
+                    XY.new(0 + x, 0 + y),
+                    XY.new(0 + x, 1 + y),
+                    XY.new(1 + x, 1 + y),
+                    XY.new(1 + x, 0 + y)
+                );
+            }
+            if (facing = Constants.getWest()) {
+                return  Constants.getDeltaList(
+                    XY.new(0 + x, 0 + y),
+                    XY.new(0 + x, 1 + y),
+                    XY.new(1 + x, 1 + y),
+                    XY.new(1 + x, 0 + y)
+                );
+            }
+            if (facing = Constants.getSouth()) {
+                return  Constants.getDeltaList(
+                    XY.new(0 + x, 0 + y),
+                    XY.new(0 + x, 1 + y),
+                    XY.new(1 + x, 1 + y),
+                    XY.new(1 + x, 0 + y)
+                );
+            }
+        }
+        if (type = Constants.getI()) {
+            if (facing = Constants.getNorth()) {
+                return  Constants.getDeltaList(
+                    XY.new(-1 + x, 0 + y),
+                    XY.new(0 + x, 0 + y),
+                    XY.new(1 + x, 0 + y),
+                    XY.new(2 + x, 0 + y)
+                );
+            }
+            if (facing = Constants.getEast()) {
+                return  Constants.getDeltaList(
+                    XY.new(1 + x, 1 + y),
+                    XY.new(1 + x, 0 + y),
+                    XY.new(1 + x, -1 + y),
+                    XY.new(1 + x, -2 + y)
+                );
+            }
+            if (facing = Constants.getWest()) {
+                return  Constants.getDeltaList(
+                    XY.new(0 + x, 1 + y),
+                    XY.new(0 + x, 0 + y),
+                    XY.new(0 + x, -1 + y),
+                    XY.new(0 + x, -2 + y)
+                );
+            }
+            if (facing = Constants.getSouth()) {
+                return  Constants.getDeltaList(
+                    XY.new(-1 + x, -1 + y),
+                    XY.new(0 + x, -1 + y),
+                    XY.new(1 + x, -1 + y),
+                    XY.new(2 + x, -1 + y)
+                );
+            }
+        }
+        if (type = Constants.getT()) {
+            if (facing = Constants.getNorth()) {
+                return  Constants.getDeltaList(
+                    XY.new(-1 + x, 0 + y),
+                    XY.new(0 + x, 0 + y),
+                    XY.new(1 + x, 0 + y),
+                    XY.new(0 + x, 1 + y)
+                );
+            }
+            if (facing = Constants.getEast()) {
+                return  Constants.getDeltaList(
+                    XY.new(0 + x, 1 + y),
+                    XY.new(0 + x, 0 + y),
+                    XY.new(0 + x, -1 + y),
+                    XY.new(1 + x, 0 + y)
+                );
+            }
+            if (facing = Constants.getWest()) {
+                return  Constants.getDeltaList(
+                    XY.new(0 + x, 1 + y),
+                    XY.new(0 + x, 0 + y),
+                    XY.new(0 + x, -1 + y),
+                    XY.new(-1 + x, 0 + y)
+                );
+            }
+            if (facing = Constants.getSouth()) {
+                return  Constants.getDeltaList(
+                    XY.new(-1 + x, 0 + y),
+                    XY.new(0 + x, 0 + y),
+                    XY.new(1 + x, 0 + y),
+                    XY.new(0 + x, -1 + y)
+                );
+            }
+        }
+        if (type = Constants.getL()) {
+            if (facing = Constants.getNorth()) {
+                return  Constants.getDeltaList(
+                    XY.new(-1 + x, 0 + y),
+                    XY.new(0 + x, 0 + y),
+                    XY.new(1 + x, 0 + y),
+                    XY.new(1 + x, 1 + y)
+                );
+            }
+            if (facing = Constants.getEast()) {
+                return  Constants.getDeltaList(
+                    XY.new(0 + x, 1 + y),
+                    XY.new(0 + x, 0 + y),
+                    XY.new(0 + x, -1 + y),
+                    XY.new(1 + x, -1 + y)
+                );
+            }
+            if (facing = Constants.getWest()) {
+                return  Constants.getDeltaList(
+                    XY.new(0 + x, 1 + y),
+                    XY.new(0 + x, 0 + y),
+                    XY.new(0 + x, -1 + y),
+                    XY.new(-1 + x, 1 + y)
+                );
+            }
+            if (facing = Constants.getSouth()) {
+                return  Constants.getDeltaList(
+                    XY.new(-1 + x, 0 + y),
+                    XY.new(0 + x, 0 + y),
+                    XY.new(1 + x, 0 + y),
+                    XY.new(-1 + x, -1 + y)
+                );
+            }
+        }
+        if (type = Constants.getJ()) {
+            if (facing = Constants.getNorth()) {
+                return  Constants.getDeltaList(
+                    XY.new(-1 + x, 0 + y),
+                    XY.new(0 + x, 0 + y),
+                    XY.new(1 + x, 0 + y),
+                    XY.new(-1 + x, 1 + y)
+                );
+            }
+            if (facing = Constants.getEast()) {
+                return  Constants.getDeltaList(
+                    XY.new(0 + x, 1 + y),
+                    XY.new(0 + x, 0 + y),
+                    XY.new(0 + x, -1 + y),
+                    XY.new(1 + x, 1 + y)
+                );
+            }
+            if (facing = Constants.getWest()) {
+                return  Constants.getDeltaList(
+                    XY.new(0 + x, 1 + y),
+                    XY.new(0 + x, 0 + y),
+                    XY.new(0 + x, -1 + y),
+                    XY.new(-1 + x, -1 + y)
+                );
+            }
+            if (facing = Constants.getSouth()) {
+                return  Constants.getDeltaList(
+                    XY.new(-1 + x, 0 + y),
+                    XY.new(0 + x, 0 + y),
+                    XY.new(1 + x, 0 + y),
+                    XY.new(1 + x, -1 + y)
+                );
+            }
+        }
+        if (type = Constants.getS()) {
+            if (facing = Constants.getNorth()) {
+                return  Constants.getDeltaList(
+                    XY.new(-1 + x, 0 + y),
+                    XY.new(0 + x, 0 + y),
+                    XY.new(0 + x, 1 + y),
+                    XY.new(1 + x, 1 + y)
+                );
+            }
+            if (facing = Constants.getEast()) {
+                return  Constants.getDeltaList(
+                    XY.new(0 + x, 1 + y),
+                    XY.new(0 + x, 0 + y),
+                    XY.new(1 + x, 0 + y),
+                    XY.new(1 + x, -1 + y)
+                );
+            }
+            if (facing = Constants.getWest()) {
+                return  Constants.getDeltaList(
+                    XY.new(-1 + x, 1 + y),
+                    XY.new(-1 + x, 0 + y),
+                    XY.new(0 + x, 0 + y),
+                    XY.new(0 + x, 1 + y)
+                );
+            }
+            if (facing = Constants.getSouth()) {
+                return  Constants.getDeltaList(
+                    XY.new(-1 + x, -1 + y),
+                    XY.new(0 + x, -1 + y),
+                    XY.new(0 + x, 0 + y),
+                    XY.new(1 + x, 0 + y)
+                );
+            }
+        }
+        if (type = Constants.getZ()) {
+            if (facing = Constants.getNorth()) {
+                return  Constants.getDeltaList(
+                    XY.new(1 + x, 0 + y),
+                    XY.new(0 + x, 0 + y),
+                    XY.new(0 + x, 1 + y),
+                    XY.new(-1 + x, 1 + y)
+                );
+            }
+            if (facing = Constants.getEast()) {
+                return  Constants.getDeltaList(
+                    XY.new(0 + x, -1 + y),
+                    XY.new(0 + x, 0 + y),
+                    XY.new(1 + x, 0 + y),
+                    XY.new(1 + x, 1 + y)
+                );
+            }
+            if (facing = Constants.getWest()) {
+                return  Constants.getDeltaList(
+                    XY.new(-1 + x, -1 + y),
+                    XY.new(-1 + x, 0 + y),
+                    XY.new(0 + x, 0 + y),
+                    XY.new(0 + x, 1 + y)
+                );
+            }
+            if (facing = Constants.getSouth()) {
+                return  Constants.getDeltaList(
+                    XY.new(1 + x, -1 + y),
+                    XY.new(0 + x, -1 + y),
+                    XY.new(0 + x, 0 + y),
+                    XY.new(-1 + x, 0 + y)
+                );
+            }
+        }
+        return Array.new(0);
+    }
+
+    // OffsetOfPoint1AfterRotate
+    function int get2x2() {
+        return 0;
+    }
+    function int get4x1() {
+        return 1;
+    }
+    function int get3x2() {
+        return 2;
+    }
+    function XY getDelta(int x, int facing, int newFacing, int point) {
+        if (x = Constants.get2x2()) {
+            if (facing = Constants.getNorth()) {
+                if (newFacing = Constants.getEast()) {
+                    if (point = Constants.getPoint2()) {
+                        return XY.new(0, 0);
+                    }
+                    if (point = Constants.getPoint3()) {
+                        return XY.new(0, 0);
+                    }
+                    if (point = Constants.getPoint4()) {
+                        return XY.new(0, 0);
+                    }
+                    if (point = Constants.getPoint5()) {
+                        return XY.new(0, 0);
+                    }
+                }
+                if (newFacing = Constants.getWest()) {
+                    if (point = Constants.getPoint2()) {
+                        return XY.new(0, 0);
+                    }
+                    if (point = Constants.getPoint3()) {
+                        return XY.new(0, 0);
+                    }
+                    if (point = Constants.getPoint4()) {
+                        return XY.new(0, 0);
+                    }
+                    if (point = Constants.getPoint5()) {
+                        return XY.new(0, 0);
+                    }
+                }
+            }
+            if (facing = Constants.getEast()) {
+                if (newFacing = Constants.getSouth()) {
+                    if (point = Constants.getPoint2()) {
+                        return XY.new(0, 0);
+                    }
+                    if (point = Constants.getPoint3()) {
+                        return XY.new(0, 0);
+                    }
+                    if (point = Constants.getPoint4()) {
+                        return XY.new(0, 0);
+                    }
+                    if (point = Constants.getPoint5()) {
+                        return XY.new(0, 0);
+                    }
+                }
+                if (newFacing = Constants.getNorth()) {
+                    if (point = Constants.getPoint2()) {
+                        return XY.new(0, 0);
+                    }
+                    if (point = Constants.getPoint3()) {
+                        return XY.new(0, 0);
+                    }
+                    if (point = Constants.getPoint4()) {
+                        return XY.new(0, 0);
+                    }
+                    if (point = Constants.getPoint5()) {
+                        return XY.new(0, 0);
+                    }
+                }
+            }
+            if (facing = Constants.getSouth()) {
+                if (newFacing = Constants.getWest()) {
+                    if (point = Constants.getPoint2()) {
+                        return XY.new(0, 0);
+                    }
+                    if (point = Constants.getPoint3()) {
+                        return XY.new(0, 0);
+                    }
+                    if (point = Constants.getPoint4()) {
+                        return XY.new(0, 0);
+                    }
+                    if (point = Constants.getPoint5()) {
+                        return XY.new(0, 0);
+                    }
+                }
+                if (newFacing = Constants.getEast()) {
+                    if (point = Constants.getPoint2()) {
+                        return XY.new(0, 0);
+                    }
+                    if (point = Constants.getPoint3()) {
+                        return XY.new(0, 0);
+                    }
+                    if (point = Constants.getPoint4()) {
+                        return XY.new(0, 0);
+                    }
+                    if (point = Constants.getPoint5()) {
+                        return XY.new(0, 0);
+                    }
+                }
+            }
+            if (facing = Constants.getWest()) {
+                if (newFacing = Constants.getNorth()) {
+                    if (point = Constants.getPoint2()) {
+                        return XY.new(0, 0);
+                    }
+                    if (point = Constants.getPoint3()) {
+                        return XY.new(0, 0);
+                    }
+                    if (point = Constants.getPoint4()) {
+                        return XY.new(0, 0);
+                    }
+                    if (point = Constants.getPoint5()) {
+                        return XY.new(0, 0);
+                    }
+                }
+                if (newFacing = Constants.getSouth()) {
+                    if (point = Constants.getPoint2()) {
+                        return XY.new(0, 0);
+                    }
+                    if (point = Constants.getPoint3()) {
+                        return XY.new(0, 0);
+                    }
+                    if (point = Constants.getPoint4()) {
+                        return XY.new(0, 0);
+                    }
+                    if (point = Constants.getPoint5()) {
+                        return XY.new(0, 0);
+                    }
+                }
+            }
+        }
+        if (x = Constants.get4x1()) {
+            if (facing = Constants.getNorth()) {
+                if (newFacing = Constants.getEast()) {
+                    if (point = Constants.getPoint2()) {
+                        return XY.new(-2, 0);
+                    }
+                    if (point = Constants.getPoint3()) {
+                        return XY.new(1, 0);
+                    }
+                    if (point = Constants.getPoint4()) {
+                        return XY.new(-2, -1);
+                    }
+                    if (point = Constants.getPoint5()) {
+                        return XY.new(1, 2);
+                    }
+                }
+                if (newFacing = Constants.getWest()) {
+                    if (point = Constants.getPoint2()) {
+                        return XY.new(-1, 0);
+                    }
+                    if (point = Constants.getPoint3()) {
+                        return XY.new(2, 0);
+                    }
+                    if (point = Constants.getPoint4()) {
+                        return XY.new(-1, 2);
+                    }
+                    if (point = Constants.getPoint5()) {
+                        return XY.new(2, -1);
+                    }
+                }
+            }
+            if (facing = Constants.getEast()) {
+                if (newFacing = Constants.getSouth()) {
+                    if (point = Constants.getPoint2()) {
+                        return XY.new(-1, 0);
+                    }
+                    if (point = Constants.getPoint3()) {
+                        return XY.new(2, 0);
+                    }
+                    if (point = Constants.getPoint4()) {
+                        return XY.new(-1, 2);
+                    }
+                    if (point = Constants.getPoint5()) {
+                        return XY.new(2, -1);
+                    }
+                }
+                if (newFacing = Constants.getNorth()) {
+                    if (point = Constants.getPoint2()) {
+                        return XY.new(2, 0);
+                    }
+                    if (point = Constants.getPoint3()) {
+                        return XY.new(-1, 0);
+                    }
+                    if (point = Constants.getPoint4()) {
+                        return XY.new(2, 1);
+                    }
+                    if (point = Constants.getPoint5()) {
+                        return XY.new(-1, -2);
+                    }
+                }
+            }
+            if (facing = Constants.getSouth()) {
+                if (newFacing = Constants.getWest()) {
+                    if (point = Constants.getPoint2()) {
+                        return XY.new(2, 0);
+                    }
+                    if (point = Constants.getPoint3()) {
+                        return XY.new(-1, 0);
+                    }
+                    if (point = Constants.getPoint4()) {
+                        return XY.new(2, 1);
+                    }
+                    if (point = Constants.getPoint5()) {
+                        return XY.new(-1, -2);
+                    }
+                }
+                if (newFacing = Constants.getEast()) {
+                    if (point = Constants.getPoint2()) {
+                        return XY.new(1, 0);
+                    }
+                    if (point = Constants.getPoint3()) {
+                        return XY.new(-2, 0);
+                    }
+                    if (point = Constants.getPoint4()) {
+                        return XY.new(1, -2);
+                    }
+                    if (point = Constants.getPoint5()) {
+                        return XY.new(-2, 1);
+                    }
+                }
+            }
+            if (facing = Constants.getWest()) {
+                if (newFacing = Constants.getNorth()) {
+                    if (point = Constants.getPoint2()) {
+                        return XY.new(1, 0);
+                    }
+                    if (point = Constants.getPoint3()) {
+                        return XY.new(-2, 0);
+                    }
+                    if (point = Constants.getPoint4()) {
+                        return XY.new(1, -2);
+                    }
+                    if (point = Constants.getPoint5()) {
+                        return XY.new(-2, 1);
+                    }
+                }
+                if (newFacing = Constants.getSouth()) {
+                    if (point = Constants.getPoint2()) {
+                        return XY.new(-2, 0);
+                    }
+                    if (point = Constants.getPoint3()) {
+                        return XY.new(1, 0);
+                    }
+                    if (point = Constants.getPoint4()) {
+                        return XY.new(-2, -1);
+                    }
+                    if (point = Constants.getPoint5()) {
+                        return XY.new(1, 2);
+                    }
+                }
+            }
+        }
+        if (x = Constants.get3x2()) {
+            if (facing = Constants.getNorth()) {
+                if (newFacing = Constants.getEast()) {
+                    if (point = Constants.getPoint2()) {
+                        return XY.new(-1, 0);
+                    }
+                    if (point = Constants.getPoint3()) {
+                        return XY.new(-1, 1);
+                    }
+                    if (point = Constants.getPoint4()) {
+                        return XY.new(0, -2);
+                    }
+                    if (point = Constants.getPoint5()) {
+                        return XY.new(-1, -2);
+                    }
+                }
+                if (newFacing = Constants.getWest()) {
+                    if (point = Constants.getPoint2()) {
+                        return XY.new(1, 0);
+                    }
+                    if (point = Constants.getPoint3()) {
+                        return XY.new(1, 1);
+                    }
+                    if (point = Constants.getPoint4()) {
+                        return XY.new(0, -2);
+                    }
+                    if (point = Constants.getPoint5()) {
+                        return XY.new(1, -2);
+                    }
+                }
+            }
+            if (facing = Constants.getEast()) {
+                if (newFacing = Constants.getSouth()) {
+                    if (point = Constants.getPoint2()) {
+                        return XY.new(1, 0);
+                    }
+                    if (point = Constants.getPoint3()) {
+                        return XY.new(1, -1);
+                    }
+                    if (point = Constants.getPoint4()) {
+                        return XY.new(0, 2);
+                    }
+                    if (point = Constants.getPoint5()) {
+                        return XY.new(1, 2);
+                    }
+                }
+                if (newFacing = Constants.getNorth()) {
+                    if (point = Constants.getPoint2()) {
+                        return XY.new(1, 0);
+                    }
+                    if (point = Constants.getPoint3()) {
+                        return XY.new(1, -1);
+                    }
+                    if (point = Constants.getPoint4()) {
+                        return XY.new(0, 2);
+                    }
+                    if (point = Constants.getPoint5()) {
+                        return XY.new(1, 2);
+                    }
+                }
+            }
+            if (facing = Constants.getSouth()) {
+                if (newFacing = Constants.getWest()) {
+                    if (point = Constants.getPoint2()) {
+                        return XY.new(1, 0);
+                    }
+                    if (point = Constants.getPoint3()) {
+                        return XY.new(1, 1);
+                    }
+                    if (point = Constants.getPoint4()) {
+                        return XY.new(0, -2);
+                    }
+                    if (point = Constants.getPoint5()) {
+                        return XY.new(1, -2);
+                    }
+                }
+                if (newFacing = Constants.getEast()) {
+                    if (point = Constants.getPoint2()) {
+                        return XY.new(-1, 0);
+                    }
+                    if (point = Constants.getPoint3()) {
+                        return XY.new(-1, 1);
+                    }
+                    if (point = Constants.getPoint4()) {
+                        return XY.new(0, -2);
+                    }
+                    if (point = Constants.getPoint5()) {
+                        return XY.new(-1, -2);
+                    }
+                }
+            }
+            if (facing = Constants.getWest()) {
+                if (newFacing = Constants.getNorth()) {
+                    if (point = Constants.getPoint2()) {
+                        return XY.new(-1, 0);
+                    }
+                    if (point = Constants.getPoint3()) {
+                        return XY.new(-1, -1);
+                    }
+                    if (point = Constants.getPoint4()) {
+                        return XY.new(0, 2);
+                    }
+                    if (point = Constants.getPoint5()) {
+                        return XY.new(-1, 2);
+                    }
+                }
+                if (newFacing = Constants.getSouth()) {
+                    if (point = Constants.getPoint2()) {
+                        return XY.new(-1, 0);
+                    }
+                    if (point = Constants.getPoint3()) {
+                        return XY.new(-1, -1);
+                    }
+                    if (point = Constants.getPoint4()) {
+                        return XY.new(0, 2);
+                    }
+                    if (point = Constants.getPoint5()) {
+                        return XY.new(-1, 2);
+                    }
+                }
+            }
+        }
+        return XY.new(0, 0);
+    }
+
+    // FacingAfterRotate
+    function int getNewFacing(int facing, int direction) {
+        if (facing = Constants.getNorth()) {
+            if (direction = Constants.getClockwise()) {
+                return Constants.getEast();
+            }
+            if (direction = Constants.getCounterclockwise()) {
+                return Constants.getWest();
+            }
+        }
+        if (facing = Constants.getEast()) {
+            if (direction = Constants.getClockwise()) {
+                return Constants.getSouth();
+            }
+            if (direction = Constants.getCounterclockwise()) {
+                return Constants.getNorth();
+            }
+        }
+        if (facing = Constants.getSouth()) {
+            if (direction = Constants.getClockwise()) {
+                return Constants.getWest();
+            }
+            if (direction = Constants.getCounterclockwise()) {
+                return Constants.getEast();
+            }
+        }
+        if (facing = Constants.getWest()) {
+            if (direction = Constants.getClockwise()) {
+                return Constants.getNorth();
+            }
+            if (direction = Constants.getCounterclockwise()) {
+                return Constants.getSouth();
+            }
+        }
+        return -1;
+    }
+}

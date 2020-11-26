@@ -1,0 +1,220 @@
+function Tetromino.new 0
+push constant 4
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+pop this 0
+push argument 1
+pop this 1
+push argument 2
+pop this 2
+push argument 3
+pop this 3
+push pointer 0
+return
+function Tetromino.fall 0
+push argument 0
+pop pointer 0
+push this 3
+push argument 1
+sub
+pop this 3
+push constant 0
+return
+function Tetromino.move 0
+push argument 0
+pop pointer 0
+push this 2
+push argument 1
+add
+pop this 2
+push constant 0
+return
+function Tetromino.rotate 2
+push argument 0
+pop pointer 0
+push pointer 0
+push argument 1
+push argument 2
+call Tetromino.getRotateD 3
+pop local 0
+push this 2
+push local 0
+call XY.getX 1
+add
+pop this 2
+push this 3
+push local 0
+call XY.getY 1
+add
+pop this 3
+push this 2
+push this 3
+call XY.new 2
+pop local 1
+push local 1
+call XY.dispose 1
+pop temp 0
+push this 1
+push argument 1
+call Constants.getNewFacing 2
+pop this 1
+push local 0
+call XY.dispose 1
+pop temp 0
+push constant 0
+return
+function Tetromino.getRotateD 2
+push argument 0
+pop pointer 0
+push this 1
+push argument 1
+call Constants.getNewFacing 2
+pop local 0
+push argument 2
+call Constants.getPoint1 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE0
+push argument 2
+call Constants.getPoint2 0
+eq
+push argument 2
+call Constants.getPoint3 0
+eq
+or
+push argument 2
+call Constants.getPoint4 0
+eq
+or
+push argument 2
+call Constants.getPoint5 0
+eq
+or
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push this 0
+call Constants.getO 0
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+call Constants.get2x2 0
+pop local 1
+label IF_FALSE2
+push this 0
+call Constants.getI 0
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+call Constants.get4x1 0
+pop local 1
+label IF_FALSE3
+push this 0
+call Constants.getJ 0
+eq
+push this 0
+call Constants.getL 0
+eq
+or
+push this 0
+call Constants.getS 0
+eq
+or
+push this 0
+call Constants.getT 0
+eq
+or
+push this 0
+call Constants.getZ 0
+eq
+or
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+call Constants.get3x2 0
+pop local 1
+label IF_FALSE4
+push local 1
+push this 1
+push local 0
+push argument 2
+call Constants.getDelta 4
+return
+label IF_FALSE1
+push constant 0
+push constant 0
+call XY.new 2
+return
+function Tetromino.getRotateList 3
+push argument 0
+pop pointer 0
+push pointer 0
+push argument 1
+push argument 2
+call Tetromino.getRotateD 3
+pop local 2
+push this 1
+push argument 1
+call Constants.getNewFacing 2
+pop local 0
+push constant 4
+call MyArray.new 1
+pop local 1
+push local 1
+push pointer 0
+push local 0
+push local 2
+call Tetromino.getXYListByFacingAndPoint 3
+call MyArray.setA 2
+pop temp 0
+push local 1
+return
+function Tetromino.getXYListByFacingAndPoint 2
+push argument 0
+pop pointer 0
+push this 2
+push argument 2
+call XY.getX 1
+add
+pop local 0
+push this 3
+push argument 2
+call XY.getY 1
+add
+pop local 1
+push this 0
+push argument 1
+push local 0
+push local 1
+call Constants.getDList 4
+return
+function Tetromino.getXYList 0
+push argument 0
+pop pointer 0
+push this 0
+push this 1
+push this 2
+push argument 1
+add
+push this 3
+push argument 2
+add
+call Constants.getDList 4
+return
+function Tetromino.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return

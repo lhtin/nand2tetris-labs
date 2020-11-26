@@ -1,0 +1,17 @@
+class MyKeyboard {
+    function char getCurrentKey() {
+        return Keyboard.keyPressed();
+    }
+    function char getPressedKey() {
+        var int key1, key2;
+        let key1 = Keyboard.keyPressed();
+        while (key1 = 0) {
+            let key1 = Keyboard.keyPressed();
+        }
+        let key2 = Keyboard.keyPressed();
+        while (~(key2 = 0)) {
+            let key2 = Keyboard.keyPressed();
+        }
+        return key1;
+    }
+}

@@ -1,0 +1,354 @@
+class Matrix {
+    field int MIN_X, MIN_Y, MAX_X, MAX_Y;
+    field Array table;
+    field Tetromino tetromino;
+    constructor Matrix new() {
+        var int at, at1;
+        let MIN_X = 1;
+        let MIN_Y = 1;
+        let MAX_X = 10;
+        let MAX_Y = 22;
+        let table = getNewTable();
+        let tetromino = null;
+        return this;
+    }
+    method Array getNewTable() {
+        var int atX, atY;
+        var Array t, col;
+        let t = Array.new(MAX_X + 1);
+
+        let atX = 0;
+        while (~(atX > MAX_X)) {
+            let col = Array.new(MAX_Y + 1);
+            let atY = 0;
+            while(~(atY > MAX_Y)) {
+                let col[atY] = false;
+                let atY = atY + 1;
+            }
+            let t[atX] = col;
+            let atX = atX + 1;
+        }
+        return t;
+    }
+    method void setTetromino(Tetromino t) {
+        if (~(tetromino = null)) {
+            do tetromino.dispose();
+        }
+        let tetromino = t;
+        return;
+    }
+    method MyArray getList(int dx, int dy) {
+        var MyArray ma;
+        let ma = MyArray.new(0);
+        if (tetromino = null) {
+            // len 0
+            return ma;
+        }
+        do ma.setLen(4);
+        do ma.setA(tetromino.getXYList(dx, dy));
+        return ma;
+    }
+    method boolean canFall() {
+        var MyArray newList;
+        var Array a, temp;
+        var XY d;
+        var int at, len;
+        var boolean canIFall;
+        let newList = getList(0, -1);
+        let a = newList.getA();
+        let len = newList.getLen();
+        let at = 0;
+        let canIFall = true;
+        while ((at < len) & canIFall) {
+            let d = a[at];
+            let temp = table[d.getX()];
+            if ((d.getY() < MIN_Y) | temp[d.getY()]) {
+                let canIFall = false;
+            }
+            let at = at + 1;
+        }
+        do disposeList(newList);
+        return canIFall;
+    }
+    method void fall() {
+        do tetromino.fall(1);
+        return;
+    }
+    method boolean move(int direction) {
+        var int dx, at, len, x, y;
+        var MyArray newList;
+        var Array a, temp;
+        var XY d;
+        var boolean canMove;
+        if (direction = Constants.getRight()) {
+            let dx = 1;
+        } else {
+            let dx = -1;
+        }
+        let newList = getList(dx, 0);
+        let a = newList.getA();
+        let len = newList.getLen();
+        let at = 0;
+        let canMove = true;
+        while ((at < len) & canMove) {
+            let d = a[at];
+            let x = d.getX();
+            let y = d.getY();
+            if ((x < MIN_X) | (x > MAX_X)) {
+                let canMove = false;
+            } else {
+                let temp = table[x];
+                if (temp[y]) {
+                    let canMove = false;
+                }
+            }
+            let at = at + 1;
+        }
+        if (canMove) {
+            do tetromino.move(dx);
+        }
+        do disposeList(newList);
+        return canMove;
+    }
+    method boolean canRotate(MyArray list) {
+        var int at, len, x, y;
+        var Array a, temp;
+        var XY d;
+        let a = list.getA();
+        let len = list.getLen();
+        let at = 0;
+        while (at < len) {
+            let d = a[at];
+            let x = d.getX();
+            let y = d.getY();
+            if ((x < MIN_X) |
+                (x > MAX_X) |
+                (y < MIN_Y) |
+                (y > MAX_Y)) {
+                return false;
+            } else {
+                let temp = table[x];
+                if (temp[y]) {
+                    return false;
+                }
+            }
+            let at = at + 1;
+        }
+        return true;
+    }
+    method boolean rotate(int direction) {
+        var Array points;
+        var MyArray rList;
+        var int at;
+        let points = Array.new(5);
+        let points[0] = Constants.getPoint1();
+        let points[1] = Constants.getPoint2();
+        let points[2] = Constants.getPoint3();
+        let points[3] = Constants.getPoint4();
+        let points[4] = Constants.getPoint5();
+        let rList = null;
+        let at = 0;
+        while (at < 5) {
+            let rList = tetromino.getRotateList(direction, points[at]);
+            if (canRotate(rList)) {
+                do tetromino.rotate(direction, points[at]);
+                do rList.dispose();
+                do points.dispose();
+                return true;
+            } else {
+                do rList.dispose();
+            }
+            let at = at + 1;
+        }
+        do points.dispose();
+        return false;
+    }
+    method void hardDrop() {
+        var int dy, dy1, len, at, x, y;
+        var Array col, a;
+        var MyArray list;
+        var XY d;
+        let list = getList(0, 0);
+        let a = list.getA();
+        let len = list.getLen();
+        let at = 0;
+        let dy = 20;
+        while (at < len) {
+            let d = a[at];
+            let x = d.getX();
+            let y = d.getY();
+            let col = table[x];
+            let dy1 = 0;
+            let y = y - 1;
+            while (~(y < MIN_Y) & ~col[y]) {
+                let dy1 = dy1 + 1;
+                let y = y - 1;
+            }
+            if (dy1 < dy) {
+                let dy = dy1;
+            }
+            let at = at + 1;
+        }
+        do tetromino.fall(dy);
+        do disposeList(list);
+        return;
+    }
+    method void disposeList(MyArray list) {
+        // 清理
+        var XY d;
+        var int len, at;
+        var Array a;
+        let a = list.getA();
+        let len = list.getLen();
+        let at = 0;
+        while (at < len) {
+            let d = a[at];
+            do d.dispose();
+            let at = at + 1;
+        }
+        do list.dispose();
+        return;
+    }
+    method boolean someSame(MyArray list, int x, int y) {
+        var Array a;
+        var XY d;
+        var int len, at;
+        let a = list.getA();
+        let len = list.getLen();
+        let at = 0;
+        while (at < len) {
+            let d = a[at];
+            if (d.getX() = x & d.getY() = y) {
+                return true;
+            }
+            let at = at + 1;
+        }
+        return false;
+    }
+    method List getSnapshot() {
+        var ListSnapshot snapshot;
+        var Snapshot item;
+        var MyArray list;
+        var Array temp;
+        var XY xy;
+        var int atX, atY;
+        let list = getList(0, 0);
+        let atY = MIN_Y;
+        let snapshot = null;
+        while (~(atY > MAX_Y)) {
+            let atX = MIN_X;
+            while(~(atX > MAX_X)) {
+                let item = Snapshot.new();
+                let temp = table[atX];
+                if (temp[atY]) {
+                    do item.setBit(1);
+                }
+                if (someSame(list, atX, atY)) {
+                    do item.setBit(2);
+                }
+                let xy = XY.new(atX, atY);
+                do item.setXY(xy);
+                let snapshot = ListSnapshot.new(item, snapshot);
+                let atX = atX + 1;
+            }
+            let atY = atY + 1;
+        }
+        return snapshot;
+    }
+    method SetInt getHitList() {
+        var MyArray list;
+        var SetInt ySet, hitSet, tempSet;
+        var Array listA, temp;
+        var XY d;
+        var int at, len, x, y;
+        let ySet = null;
+        let list = getList(0, 0);
+        let len = list.getLen();
+        let listA = list.getA();
+        let at = 0;
+        while (at < len) {
+            let d = listA[at];
+            let y = d.getY();
+            let x = d.getX();
+            if (~SetInt.exist(ySet, y)) {
+                let ySet = SetInt.new(y, ySet);
+            }
+            let temp = table[x];
+            let temp[y] = true;
+            let at = at + 1;
+        }
+        let hitSet = null;
+        let tempSet = ySet;
+        while (~(tempSet = null)) {
+            let y = tempSet.getData();
+            let at = MIN_X;
+            let temp = table[at];
+            while (~(at > MAX_X) & temp[y]) {
+                let at = at + 1;
+                if (~(at > MAX_X)) {
+                    let temp = table[at];
+                }
+            }
+            if ((at = (MAX_X + 1)) & ~SetInt.exist(hitSet, y)) {
+                let hitSet = SetInt.new(y, hitSet);
+            }
+            let tempSet = tempSet.getNext();
+        }
+        do ySet.dispose();
+        return hitSet;
+    }
+    method void clear(SetInt hitList) {
+        var Array newTable, col, temp1, temp2;
+        var int dy, atX, atY, atY1;
+        if (hitList = null) {
+            return;
+        }
+        let newTable = getNewTable();
+        let dy = 0;
+        let atY = 0;
+        let atY1 = 0;
+        while(~(atY > MAX_Y)) {
+            if (~SetInt.exist(hitList, atY)) {
+                // 当前行没有满
+                let atX = 0;
+                while(~(atX > MAX_X)) {
+                    let temp1 = table[atX];
+                    let temp2 = newTable[atX];
+                    let temp2[atY1] = temp1[atY];
+                    let atX = atX + 1;
+                }
+                let atY1 = atY1 + 1;
+            }
+            let atY = atY + 1;
+        }
+        let atX = 0;
+        while(~(atX > MAX_X)) {
+            let col = table[atX];
+            do col.dispose();
+            let atX = atX + 1;
+        }
+        do table.dispose();
+        let table = newTable;
+        return;
+    }
+    method boolean getIsOver() {
+        var int atX;
+        var Array col;
+        while(~(atX > MAX_X)) {
+            let col = table[atX];
+            if (col[MAX_Y] | col[MAX_Y - 1]) {
+                return true;
+            }
+            let atX = atX + 1;
+        }
+        return false;
+    }
+    method void dispose() {
+        do table.dispose();
+        if (~(tetromino = null)) {
+            do tetromino.dispose();
+        }
+        do Memory.deAlloc(this);
+        return;
+    }
+}

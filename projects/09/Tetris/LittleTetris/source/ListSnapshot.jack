@@ -1,0 +1,23 @@
+class ListSnapshot {
+    field Snapshot data;
+    field ListSnapshot next;
+    constructor ListSnapshot new(Snapshot car, ListSnapshot cdr) {
+        let data = car;
+        let next = cdr;
+        return this;
+    }
+    method Snapshot getData() {
+        return data;
+    }
+    method ListSnapshot getNext() {
+        return next;
+    }
+    method void dispose() {
+        do data.dispose();
+        if (~(next = null)) {
+            do next.dispose();
+        }
+        do Memory.deAlloc(this);
+        return;
+    }
+}

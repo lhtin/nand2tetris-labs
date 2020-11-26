@@ -1,0 +1,79 @@
+class Tetromino {
+    field int type, facing, x, y;
+    constructor Tetromino new(int type1, int facing1, int x1, int y1) {
+        let type = type1;
+        let facing = facing1;
+        let x = x1;
+        let y = y1;
+        return this;
+    }
+    method void fall(int dy) {
+        let y = y - dy;
+        return;
+    }
+    method void move(int dx) {
+        let x = x + dx;
+        return;
+    }
+    method void rotate(int direction, int point) {
+        var XY d, temp;
+        let d = getRotateD(direction, point);
+        let x = x + d.getX();
+        let y = y + d.getY();
+        let temp = XY.new(x, y);
+        do temp.dispose();
+        let facing = Constants.getNewFacing(facing, direction);
+        do d.dispose();
+        return;
+    }
+    method XY getRotateD(int direction, int point) {
+        var int newFacing, x;
+        let newFacing = Constants.getNewFacing(facing, direction);
+        if (point = Constants.getPoint1()) {
+            return XY.new(0, 0);
+        }
+        if ((point = Constants.getPoint2()) |
+            (point = Constants.getPoint3()) |
+            (point = Constants.getPoint4()) |
+            (point = Constants.getPoint5())) {
+            if (type = Constants.getO()) {
+                let x = Constants.get2x2();
+            }
+            if (type = Constants.getI()) {
+                let x = Constants.get4x1();
+            }
+            if ((type = Constants.getJ()) |
+                (type = Constants.getL()) |
+                (type = Constants.getS()) |
+                (type = Constants.getT()) |
+                (type = Constants.getZ())) {
+                let x = Constants.get3x2();
+            }
+            return Constants.getDelta(x, facing, newFacing, point);
+        }
+        return XY.new(0, 0);
+    }
+    method MyArray getRotateList(int direction, int point) {
+        var int newFacing;
+        var MyArray list;
+        var XY d;
+        let d = getRotateD(direction, point);
+        let newFacing = Constants.getNewFacing(facing, direction);
+        let list = MyArray.new(4);
+        do list.setA(getXYListByFacingAndPoint(newFacing, d));
+        return list;
+    }
+    method Array getXYListByFacingAndPoint(int facing1, XY d) {
+        var int x1, y1;
+        let x1 = x + d.getX();
+        let y1 = y + d.getY();
+        return Constants.getDList(type, facing1, x1, y1);
+    }
+    method Array getXYList(int dx, int dy) {
+        return Constants.getDList(type, facing, x + dx, y + dy);
+    }
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+}

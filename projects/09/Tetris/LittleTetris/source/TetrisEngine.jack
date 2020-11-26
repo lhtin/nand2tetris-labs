@@ -1,0 +1,364 @@
+class TetrisEngine {
+    field Queue queue;
+    field Matrix matrix;
+    field int level, clearedLines, lockDelay, score;
+    field int normalFallSpeed, softDropSpeed, fallSpeed, fallStartTime;
+    field int phase, prevPhase;
+    field Array speeds;
+    field boolean isOver;
+    field boolean doGo;
+    field boolean isHardDrop;
+    field int remainTime;
+    constructor TetrisEngine new() {
+        let speeds = Array.new(15);
+        let speeds[0] = 1000;
+        let speeds[1] = 793;
+        let speeds[2] = 618;
+        let speeds[3] = 473;
+        let speeds[4] = 355;
+        let speeds[5] = 262;
+        let speeds[6] = 190;
+        let speeds[7] = 135;
+        let speeds[8] = 94;
+        let speeds[9] = 64;
+        let speeds[10] = 43;
+        let speeds[11] = 28;
+        let speeds[12] = 18;
+        let speeds[13] = 11;
+        let speeds[14] = 7;
+        let prevPhase = -1;
+        let queue = Queue.new();
+        let matrix = Matrix.new();
+        let level = 1;
+        let clearedLines = 0;
+        let lockDelay = 500; // 0.5 * 1000
+        let score = 0;
+        do upgrade(level);
+        do go(Constants.getPause());
+        return this;
+    }
+    method void run() {
+        var int clearedCount;
+        var Array scores;
+        var Tetromino tetromino;
+        var SetInt hitList;
+        let scores = Array.new(5);
+        let scores[0] = 0;
+        let scores[1] = 100;
+        let scores[2] = 300;
+        let scores[3] = 500;
+        let scores[4] = 800;
+        let remainTime = 0;
+        let fallSpeed = normalFallSpeed;
+        let isHardDrop = false;
+        do flushScreen();
+        do flushInfo();
+        do printUsage();
+        while(~((phase = Constants.getOver()) | (phase = Constants.getSuccess()))) {
+            let doGo = false;
+            if (phase = Constants.getGeneration()) {
+                let tetromino = Tetromino.new(queue.getNext(), Constants.getNorth(), 5, 21);
+                do matrix.setTetromino(tetromino);
+                do flushInfo();
+                if (matrix.canFall()) {
+                    do matrix.fall();
+                    do flushScreen();
+                }
+                do go(Constants.getFalling());
+            } else { if (phase = Constants.getPause()) {
+                if (MyKeyboard.getPressedKey() = 140) { // ESC key
+                    // start
+                    if (prevPhase = Constants.getFalling()) {
+                        do go(Constants.getFalling());
+                    } else {
+                        if (prevPhase = Constants.getLock()) {
+                            do go(Constants.getLock());
+                        } else {
+                            do go(Constants.getGeneration());
+                        }
+                    }
+                }
+            } else { if (phase = Constants.getFalling()) {
+                if (matrix.canFall()) {
+                    if (prevPhase = Constants.getPause()) {
+                        do wait(remainTime);
+                    } else {
+                        do wait(fallSpeed);
+                    }
+                    if (~doGo) {
+                        do matrix.fall();
+                        do flushScreen();
+                    }
+                } else {
+                    do go(Constants.getLock());
+                }
+            } else { if (phase = Constants.getLock()) {
+                if (isHardDrop) {
+                    let isHardDrop = false;
+                    do go(Constants.getPattern());
+                } else {
+                    do wait(lockDelay);
+                    if (~doGo) {
+                        do go(Constants.getPattern());
+                    }
+                }
+            } else { if (phase = Constants.getPattern()) {
+                let hitList = matrix.getHitList();
+                if (hitList = null) {
+                    let clearedCount = 0;
+                } else {
+                    let clearedCount = hitList.getLen();
+                    let clearedLines = clearedLines + clearedCount;
+                    let score = score + (scores[clearedCount] * level);
+                    do matrix.clear(hitList);
+                    do hitList.dispose();
+                    do flushScreen();
+                }
+
+                let isOver = matrix.getIsOver();
+                if (isOver) {
+                    do go(Constants.getOver());
+                } else {
+                    if (~(clearedLines < (2 * level))) {
+                        if (level < 15) {
+                            let level = level + 1;
+                            do upgrade(level);
+                            do go(Constants.getGeneration());
+                        } else {
+                            do go(Constants.getSuccess());
+                        }
+                    } else {
+                        do go(Constants.getGeneration());
+                    }
+                }
+                do flushInfo();
+            }}}}}
+            if (~doGo) {
+                let prevPhase = phase;
+            }
+        }
+        if (phase = Constants.getSuccess()) {
+            do flushInfo();
+        } else { if (phase = Constants.getOver()) {
+            do flushInfo();
+        }}
+        return;
+    }
+    method void go(int newPhase) {
+        let prevPhase = phase;
+        let phase = newPhase;
+        let doGo = true;
+        do flushInfo();
+        return;
+    }
+    method void wait(int speed) {
+        do check();
+        if (doGo) {
+            let remainTime = speed;
+            return;
+        }
+        while(speed > 0) {
+            do Sys.wait(1);
+            let speed = speed - 1;
+            do check();
+            if (doGo) {
+                let remainTime = speed;
+                return;
+            }
+        }
+        return;
+    }
+    method void check() {
+        var int key;
+        let key = MyKeyboard.getCurrentKey();
+        if (key = 133 & phase = Constants.getFalling()) {
+            // down arrow
+            let fallSpeed = softDropSpeed;
+        } else {
+            let fallSpeed = normalFallSpeed;
+            if (key = 140 & ((phase = Constants.getFalling()) | (phase = Constants.getLock()))) {
+                // ESC
+                do MyKeyboard.getPressedKey();
+                do go(Constants.getPause());
+            } else { if (key = 130 & ((phase = Constants.getFalling()) | (phase = Constants.getLock()))) {
+                // left arrow
+                do MyKeyboard.getPressedKey();
+                do doMove(Constants.getLeft());
+            } else { if (key = 132 & ((phase = Constants.getFalling()) | (phase = Constants.getLock()))) {
+                // right arrow
+                do MyKeyboard.getPressedKey();
+                do doMove(Constants.getRight());
+            } else { if (key = 32 & ((phase = Constants.getFalling()) | (phase = Constants.getLock()))) {
+                // space
+                let isHardDrop = true;
+                do MyKeyboard.getPressedKey();
+                do matrix.hardDrop();
+                do flushScreen();
+                do go(Constants.getLock());
+            } else { if (key = 131 & ((phase = Constants.getFalling()) | (phase = Constants.getLock()))) {
+                // up arrow
+                do MyKeyboard.getPressedKey();
+                if (matrix.rotate(Constants.getClockwise())) {
+                    if (phase = Constants.getLock()) {
+                        if (matrix.canFall()) {
+                            do go(Constants.getFalling());
+                        } else {
+                            do go(Constants.getLock());
+                        }
+                    }
+                }
+            }}}}}
+        }
+        return;
+    }
+    method void doMove(int direction) {
+        if (matrix.move(direction)) {
+            do flushScreen();
+            if (phase = Constants.getLock()) {
+                if (matrix.canFall()) {
+                    do go(Constants.getFalling());
+                    return;
+                } else {
+                    // need to modify lock delay
+                    return;
+                }
+            }
+        }
+        return;
+    }
+    method void upgrade(int level) {
+        let normalFallSpeed = speeds[level - 1];
+        let softDropSpeed = normalFallSpeed / 20;
+        return;
+    }
+    method void flushScreen() {
+        var int leftX, A, a, b, bit, x0, y0, boxX1, boxX2, boxY1, boxY2;
+        var ListSnapshot list, current;
+        var Snapshot item;
+        var XY xy;
+        let A = 10;
+        let a = 10;
+        let b = 22;
+        let leftX = 256;
+
+        let boxX1 = leftX - 1;
+        let boxY1 = (A * 2) - 1;
+        let boxX2 = leftX + (A * a) + 1;
+        let boxY2 = A * 22 + 1;
+        // clear
+        do Screen.setColor(false);
+        do Screen.drawRectangle(boxX1, boxY1, boxX2, boxY2);
+
+        do Screen.setColor(true);
+        do Screen.drawLine(boxX1, boxY1, boxX2, boxY1);
+        do Screen.drawLine(boxX2, boxY1, boxX2, boxY2);
+        do Screen.drawLine(boxX2, boxY2, boxX1, boxY2);
+        do Screen.drawLine(boxX1, boxY2, boxX1, boxY1);
+        let list = matrix.getSnapshot();
+        let current = list;
+        while (~(current = null)) {
+            let item = current.getData();
+            let xy = item.getD();
+            let bit = item.getBit();
+            let x0 = ((xy.getX() - 1) * A) + 5 + leftX;
+            let y0 = ((22 - xy.getY()) * A) + 5;
+            if (((bit = 1) | (bit = 2)) & ~(xy.getY() > 20)) {
+                do Screen.drawRectangle(x0 - 4, y0 - 4, x0 + 4, y0 + 4);
+            }
+            let current = current.getNext();
+        }
+        if (~(list = null)) {
+            do list.dispose();
+        }
+        return;
+    }
+    method void flushInfo() {
+        var int t;
+        do Output.moveCursor(0, 0);
+        do MyOutput.printString("Phase: ");
+        if (phase = Constants.getPause()) {
+            do MyOutput.printString("Game Pause     ");
+        } else { if (phase = Constants.getOver()) {
+            do MyOutput.printString("Game Over      ");
+        } else { if (phase = Constants.getSuccess()) {
+            do MyOutput.printString("Game Finish    ");
+        } else {
+            do MyOutput.printString("Playing        ");
+        }}}
+        do MyOutput.println();
+
+        do MyOutput.printString("Level: ");
+        do MyOutput.printInt(level);
+        do MyOutput.println();
+
+        do MyOutput.printString("Score: ");
+        do MyOutput.printInt(score);
+        do MyOutput.println();
+
+        do MyOutput.printString("ClearedLines: ");
+        do MyOutput.printInt(clearedLines);
+        do MyOutput.printString("               ");
+        do MyOutput.println();
+
+        do MyOutput.printString("Speed: ");
+        do MyOutput.printInt(normalFallSpeed);
+        do MyOutput.printString("ms             ");
+        do MyOutput.println();
+
+        do MyOutput.printString("Next: ");
+        let t = queue.getNextTetromino();
+        if (t = Constants.getO()) {
+            do MyOutput.printString("O");
+        } else { if (t = Constants.getI()) {
+            do MyOutput.printString("I");
+        } else { if (t = Constants.getT()) {
+            do MyOutput.printString("T");
+        } else { if (t = Constants.getL()) {
+            do MyOutput.printString("L");
+        } else { if (t = Constants.getJ()) {
+            do MyOutput.printString("J");
+        } else { if (t = Constants.getS()) {
+            do MyOutput.printString("S");
+        } else { if (t = Constants.getZ()) {
+            do MyOutput.printString("Z");
+        } else {
+            do MyOutput.printString(" ");
+        }}}}}}}
+        do MyOutput.println();
+
+        return;
+    }
+    method void printUsage() {
+        var MyArray usage;
+        var Array a;
+        var int len;
+        let len = 14;
+        let a = Array.new(len);
+        let a[0] = "Usage: ";
+        let a[1] = "  Escape: pause/resume";
+        let a[2] = "  Left Arrow: move left";
+        let a[3] = "  Right Arrow: move right";
+        let a[4] = "  Up Arrow: rotate clockwise";
+        let a[5] = "  Down Arrow: soft drop";
+        let a[6] = "  Space: hard drop";
+        let a[7] = "";
+        let a[8] = "Mostly meet the 2009 Tetris";
+        let a[9] = "  Design Guideline.";
+        let a[10] = "";
+        let a[11] = "";
+        let a[12] = "";
+        let a[13] = "by lehuading@qq.com";
+        let usage = MyArray.new(len);
+        do usage.setA(a);
+        do Output.moveCursor(7, 0);
+        do MyOutput.printStringList(usage);
+        return;
+    }
+    method void dispose() {
+        do queue.dispose();
+        do matrix.dispose();
+        do speeds.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+}

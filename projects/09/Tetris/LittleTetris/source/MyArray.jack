@@ -1,0 +1,33 @@
+class MyArray {
+    field Array a;
+    field int len;
+    constructor MyArray new(int size) {
+        let a = null;
+        let len = size;
+        return this;
+    }
+    method int getLen() {
+        return len;
+    }
+    method void setLen(int len1) {
+        let len = len1;
+        return;
+    }
+    method void dispose() {
+        if (~(a = null)) {
+            do a.dispose();
+        }
+        do Memory.deAlloc(this);
+        return;
+    }
+    method Array getA() {
+        return a;
+    }
+    method void setA(Array a1) {
+        if (~(a = null)) {
+            do a.dispose();
+        }
+        let a = a1;
+        return;
+    }
+}

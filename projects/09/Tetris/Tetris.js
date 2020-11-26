@@ -1,18 +1,13 @@
-// from https://bost.ocks.org/mike/shuffle/
+// 将数组打乱，from https://bost.ocks.org/mike/shuffle/
 const shuffle = (arr) => {
   let unshuffledLen = arr.length
-  // While there remain elements to shuffle…
   while (unshuffledLen) {
-    // Pick a remaining element…
     unshuffledLen -= 1
     const i = Math.floor(Math.random() * unshuffledLen)
-
-    // And swap it with the current element.
     const temp = arr[unshuffledLen]
     arr[unshuffledLen] = arr[i]
     arr[i] = temp
   }
-
   return arr;
 }
 
@@ -331,6 +326,7 @@ class Queue {
     return shuffle(Object.values(TetriminoTypes))
   }
 }
+
 class Tetrimino {
   constructor (type, facing, x, y) {
     this.type = type
@@ -406,13 +402,14 @@ class Tetrimino {
     return dList.map(({dx, dy}) => ({x: this.x + dx, y: this.y + dy}))
   }
 }
+
 class Matrix {
   constructor () {
     this.MIN_X = 1
     this.MIN_Y = 1
     this.MAX_X = 10
     this.MAX_Y = 22
-    this.table = [[],[],[],[],[],[],[],[],[],[], []]
+    this.table = [[], [], [], [], [], [], [], [], [], [], []]
   }
   setTetrimino (tetrimino) {
     this.tetrimino = tetrimino
@@ -443,8 +440,8 @@ class Matrix {
     if (canMove) {
       console.log(`Move ${direction}`)
       this.tetrimino.move(dx)
-      return true
     }
+    return canMove;
   }
   canRotate (rotateList) {
     return rotateList.every(({x, y}) =>
@@ -469,6 +466,7 @@ class Matrix {
         return true
       }
     }
+    return false;
   }
   hardDrop () {
     const dy = Math.min(...this._getList().map(({x, y}) => {
@@ -548,6 +546,7 @@ class Matrix {
     }
   }
 }
+
 class TetrisEngine {
   constructor () {
     this.init()
@@ -752,7 +751,16 @@ class TetrisEngine {
     const t = Date.now() - this.fallStartTime
     let delay = this.fallSpeed
     if (t >= delay) {
-      this.matrix.fall()
+      if (!this.matrix.canFall()) {
+        this.goLockPhase(false)
+        return;
+      } else {
+        this.matrix.fall()
+        if (!this.matrix.canFall()) {
+          this.goLockPhase(false)
+          return
+        }
+      }
     } else {
       delay -= t
     }

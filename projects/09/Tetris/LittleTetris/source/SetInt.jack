@@ -1,0 +1,41 @@
+// from Chapter9
+class SetInt {
+    field int data;
+    field int len;
+    field SetInt next;
+    constructor SetInt new(int car, SetInt cdr) {
+        if (~(cdr = null)) {
+            let len = cdr.getLen() + 1;
+        } else {
+            let len = 1;
+        }
+        let data = car;
+        let next = cdr;
+        return this;
+    }
+    method int getLen() {
+        return len;
+    }
+    method int getData() {
+        return data;
+    }
+    method SetInt getNext() {
+        return next;
+    }
+    function boolean exist(SetInt cdr, int car) {
+        while (~(cdr = null)) {
+            if (cdr.getData() = car) {
+                return true;
+            }
+            let cdr = cdr.getNext();
+        }
+        return false;
+    }
+    method void dispose() {
+        if (~(next = null)) {
+            do next.dispose();
+        }
+        do Memory.deAlloc(this);
+        return;
+    }
+}

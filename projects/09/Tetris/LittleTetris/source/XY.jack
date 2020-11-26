@@ -1,0 +1,18 @@
+class XY {
+    field int dx, dy;
+    constructor XY new(int dx1, int dy1) {
+        let dx = dx1;
+        let dy = dy1;
+        return this;
+    }
+    method int getX() {
+        return dx;
+    }
+    method int getY() {
+        return dy;
+    }
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+}

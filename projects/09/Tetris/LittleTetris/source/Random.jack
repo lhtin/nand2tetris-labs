@@ -1,0 +1,22 @@
+class Random {
+    field int m, a, c, x;
+    constructor Random new(int x0) {
+        let x = x0;
+        let m = 1999;
+        let a = 3;
+        let c = 0;
+        return this;
+    }
+    method int getRandom() {
+        // 0 ~ 6
+        let x = mod(a * x, m);
+        return x / 286;
+    }
+    method int mod(int n, int m) {
+        return n - ((n / m) * m);
+    }
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+}

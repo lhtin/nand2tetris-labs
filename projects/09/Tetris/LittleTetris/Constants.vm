@@ -1,0 +1,2762 @@
+function Constants.getGeneration 0
+push constant 0
+return
+function Constants.getFalling 0
+push constant 1
+return
+function Constants.getLock 0
+push constant 2
+return
+function Constants.getPattern 0
+push constant 3
+return
+function Constants.getIterate 0
+push constant 4
+return
+function Constants.getAnimate 0
+push constant 5
+return
+function Constants.getEliminate 0
+push constant 6
+return
+function Constants.getCompletion 0
+push constant 7
+return
+function Constants.getPause 0
+push constant 8
+return
+function Constants.getOver 0
+push constant 9
+return
+function Constants.getSuccess 0
+push constant 10
+return
+function Constants.getO 0
+push constant 0
+return
+function Constants.getI 0
+push constant 1
+return
+function Constants.getT 0
+push constant 2
+return
+function Constants.getL 0
+push constant 3
+return
+function Constants.getJ 0
+push constant 4
+return
+function Constants.getS 0
+push constant 5
+return
+function Constants.getZ 0
+push constant 6
+return
+function Constants.getNorth 0
+push constant 0
+return
+function Constants.getEast 0
+push constant 1
+return
+function Constants.getSouth 0
+push constant 2
+return
+function Constants.getWest 0
+push constant 3
+return
+function Constants.getPoint1 0
+push constant 0
+return
+function Constants.getPoint2 0
+push constant 1
+return
+function Constants.getPoint3 0
+push constant 2
+return
+function Constants.getPoint4 0
+push constant 3
+return
+function Constants.getPoint5 0
+push constant 4
+return
+function Constants.getClockwise 0
+push constant 0
+return
+function Constants.getCounterclockwise 0
+push constant 1
+return
+function Constants.getLeft 0
+push constant 0
+return
+function Constants.getRight 0
+push constant 1
+return
+function Constants.getDeltaList 1
+push constant 4
+call Array.new 1
+pop local 0
+push constant 0
+push local 0
+add
+push argument 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 1
+push local 0
+add
+push argument 1
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 2
+push local 0
+add
+push argument 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 3
+push local 0
+add
+push argument 3
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 0
+return
+function Constants.getDList 0
+push argument 0
+call Constants.getO 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push argument 1
+call Constants.getNorth 0
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 0
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 1
+push argument 3
+add
+call XY.new 2
+push constant 1
+push argument 2
+add
+push constant 1
+push argument 3
+add
+call XY.new 2
+push constant 1
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+call Constants.getDeltaList 4
+return
+label IF_FALSE1
+push argument 1
+call Constants.getEast 0
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push constant 0
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 1
+push argument 3
+add
+call XY.new 2
+push constant 1
+push argument 2
+add
+push constant 1
+push argument 3
+add
+call XY.new 2
+push constant 1
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+call Constants.getDeltaList 4
+return
+label IF_FALSE2
+push argument 1
+call Constants.getWest 0
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push constant 0
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 1
+push argument 3
+add
+call XY.new 2
+push constant 1
+push argument 2
+add
+push constant 1
+push argument 3
+add
+call XY.new 2
+push constant 1
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+call Constants.getDeltaList 4
+return
+label IF_FALSE3
+push argument 1
+call Constants.getSouth 0
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push constant 0
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 1
+push argument 3
+add
+call XY.new 2
+push constant 1
+push argument 2
+add
+push constant 1
+push argument 3
+add
+call XY.new 2
+push constant 1
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+call Constants.getDeltaList 4
+return
+label IF_FALSE4
+label IF_FALSE0
+push argument 0
+call Constants.getI 0
+eq
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push argument 1
+call Constants.getNorth 0
+eq
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push constant 1
+neg
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 1
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 2
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+call Constants.getDeltaList 4
+return
+label IF_FALSE6
+push argument 1
+call Constants.getEast 0
+eq
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+push constant 1
+push argument 2
+add
+push constant 1
+push argument 3
+add
+call XY.new 2
+push constant 1
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 1
+push argument 2
+add
+push constant 1
+neg
+push argument 3
+add
+call XY.new 2
+push constant 1
+push argument 2
+add
+push constant 2
+neg
+push argument 3
+add
+call XY.new 2
+call Constants.getDeltaList 4
+return
+label IF_FALSE7
+push argument 1
+call Constants.getWest 0
+eq
+if-goto IF_TRUE8
+goto IF_FALSE8
+label IF_TRUE8
+push constant 0
+push argument 2
+add
+push constant 1
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 1
+neg
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 2
+neg
+push argument 3
+add
+call XY.new 2
+call Constants.getDeltaList 4
+return
+label IF_FALSE8
+push argument 1
+call Constants.getSouth 0
+eq
+if-goto IF_TRUE9
+goto IF_FALSE9
+label IF_TRUE9
+push constant 1
+neg
+push argument 2
+add
+push constant 1
+neg
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 1
+neg
+push argument 3
+add
+call XY.new 2
+push constant 1
+push argument 2
+add
+push constant 1
+neg
+push argument 3
+add
+call XY.new 2
+push constant 2
+push argument 2
+add
+push constant 1
+neg
+push argument 3
+add
+call XY.new 2
+call Constants.getDeltaList 4
+return
+label IF_FALSE9
+label IF_FALSE5
+push argument 0
+call Constants.getT 0
+eq
+if-goto IF_TRUE10
+goto IF_FALSE10
+label IF_TRUE10
+push argument 1
+call Constants.getNorth 0
+eq
+if-goto IF_TRUE11
+goto IF_FALSE11
+label IF_TRUE11
+push constant 1
+neg
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 1
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 1
+push argument 3
+add
+call XY.new 2
+call Constants.getDeltaList 4
+return
+label IF_FALSE11
+push argument 1
+call Constants.getEast 0
+eq
+if-goto IF_TRUE12
+goto IF_FALSE12
+label IF_TRUE12
+push constant 0
+push argument 2
+add
+push constant 1
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 1
+neg
+push argument 3
+add
+call XY.new 2
+push constant 1
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+call Constants.getDeltaList 4
+return
+label IF_FALSE12
+push argument 1
+call Constants.getWest 0
+eq
+if-goto IF_TRUE13
+goto IF_FALSE13
+label IF_TRUE13
+push constant 0
+push argument 2
+add
+push constant 1
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 1
+neg
+push argument 3
+add
+call XY.new 2
+push constant 1
+neg
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+call Constants.getDeltaList 4
+return
+label IF_FALSE13
+push argument 1
+call Constants.getSouth 0
+eq
+if-goto IF_TRUE14
+goto IF_FALSE14
+label IF_TRUE14
+push constant 1
+neg
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 1
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 1
+neg
+push argument 3
+add
+call XY.new 2
+call Constants.getDeltaList 4
+return
+label IF_FALSE14
+label IF_FALSE10
+push argument 0
+call Constants.getL 0
+eq
+if-goto IF_TRUE15
+goto IF_FALSE15
+label IF_TRUE15
+push argument 1
+call Constants.getNorth 0
+eq
+if-goto IF_TRUE16
+goto IF_FALSE16
+label IF_TRUE16
+push constant 1
+neg
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 1
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 1
+push argument 2
+add
+push constant 1
+push argument 3
+add
+call XY.new 2
+call Constants.getDeltaList 4
+return
+label IF_FALSE16
+push argument 1
+call Constants.getEast 0
+eq
+if-goto IF_TRUE17
+goto IF_FALSE17
+label IF_TRUE17
+push constant 0
+push argument 2
+add
+push constant 1
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 1
+neg
+push argument 3
+add
+call XY.new 2
+push constant 1
+push argument 2
+add
+push constant 1
+neg
+push argument 3
+add
+call XY.new 2
+call Constants.getDeltaList 4
+return
+label IF_FALSE17
+push argument 1
+call Constants.getWest 0
+eq
+if-goto IF_TRUE18
+goto IF_FALSE18
+label IF_TRUE18
+push constant 0
+push argument 2
+add
+push constant 1
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 1
+neg
+push argument 3
+add
+call XY.new 2
+push constant 1
+neg
+push argument 2
+add
+push constant 1
+push argument 3
+add
+call XY.new 2
+call Constants.getDeltaList 4
+return
+label IF_FALSE18
+push argument 1
+call Constants.getSouth 0
+eq
+if-goto IF_TRUE19
+goto IF_FALSE19
+label IF_TRUE19
+push constant 1
+neg
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 1
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 1
+neg
+push argument 2
+add
+push constant 1
+neg
+push argument 3
+add
+call XY.new 2
+call Constants.getDeltaList 4
+return
+label IF_FALSE19
+label IF_FALSE15
+push argument 0
+call Constants.getJ 0
+eq
+if-goto IF_TRUE20
+goto IF_FALSE20
+label IF_TRUE20
+push argument 1
+call Constants.getNorth 0
+eq
+if-goto IF_TRUE21
+goto IF_FALSE21
+label IF_TRUE21
+push constant 1
+neg
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 1
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 1
+neg
+push argument 2
+add
+push constant 1
+push argument 3
+add
+call XY.new 2
+call Constants.getDeltaList 4
+return
+label IF_FALSE21
+push argument 1
+call Constants.getEast 0
+eq
+if-goto IF_TRUE22
+goto IF_FALSE22
+label IF_TRUE22
+push constant 0
+push argument 2
+add
+push constant 1
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 1
+neg
+push argument 3
+add
+call XY.new 2
+push constant 1
+push argument 2
+add
+push constant 1
+push argument 3
+add
+call XY.new 2
+call Constants.getDeltaList 4
+return
+label IF_FALSE22
+push argument 1
+call Constants.getWest 0
+eq
+if-goto IF_TRUE23
+goto IF_FALSE23
+label IF_TRUE23
+push constant 0
+push argument 2
+add
+push constant 1
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 1
+neg
+push argument 3
+add
+call XY.new 2
+push constant 1
+neg
+push argument 2
+add
+push constant 1
+neg
+push argument 3
+add
+call XY.new 2
+call Constants.getDeltaList 4
+return
+label IF_FALSE23
+push argument 1
+call Constants.getSouth 0
+eq
+if-goto IF_TRUE24
+goto IF_FALSE24
+label IF_TRUE24
+push constant 1
+neg
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 1
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 1
+push argument 2
+add
+push constant 1
+neg
+push argument 3
+add
+call XY.new 2
+call Constants.getDeltaList 4
+return
+label IF_FALSE24
+label IF_FALSE20
+push argument 0
+call Constants.getS 0
+eq
+if-goto IF_TRUE25
+goto IF_FALSE25
+label IF_TRUE25
+push argument 1
+call Constants.getNorth 0
+eq
+if-goto IF_TRUE26
+goto IF_FALSE26
+label IF_TRUE26
+push constant 1
+neg
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 1
+push argument 3
+add
+call XY.new 2
+push constant 1
+push argument 2
+add
+push constant 1
+push argument 3
+add
+call XY.new 2
+call Constants.getDeltaList 4
+return
+label IF_FALSE26
+push argument 1
+call Constants.getEast 0
+eq
+if-goto IF_TRUE27
+goto IF_FALSE27
+label IF_TRUE27
+push constant 0
+push argument 2
+add
+push constant 1
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 1
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 1
+push argument 2
+add
+push constant 1
+neg
+push argument 3
+add
+call XY.new 2
+call Constants.getDeltaList 4
+return
+label IF_FALSE27
+push argument 1
+call Constants.getWest 0
+eq
+if-goto IF_TRUE28
+goto IF_FALSE28
+label IF_TRUE28
+push constant 1
+neg
+push argument 2
+add
+push constant 1
+push argument 3
+add
+call XY.new 2
+push constant 1
+neg
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 1
+push argument 3
+add
+call XY.new 2
+call Constants.getDeltaList 4
+return
+label IF_FALSE28
+push argument 1
+call Constants.getSouth 0
+eq
+if-goto IF_TRUE29
+goto IF_FALSE29
+label IF_TRUE29
+push constant 1
+neg
+push argument 2
+add
+push constant 1
+neg
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 1
+neg
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 1
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+call Constants.getDeltaList 4
+return
+label IF_FALSE29
+label IF_FALSE25
+push argument 0
+call Constants.getZ 0
+eq
+if-goto IF_TRUE30
+goto IF_FALSE30
+label IF_TRUE30
+push argument 1
+call Constants.getNorth 0
+eq
+if-goto IF_TRUE31
+goto IF_FALSE31
+label IF_TRUE31
+push constant 1
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 1
+push argument 3
+add
+call XY.new 2
+push constant 1
+neg
+push argument 2
+add
+push constant 1
+push argument 3
+add
+call XY.new 2
+call Constants.getDeltaList 4
+return
+label IF_FALSE31
+push argument 1
+call Constants.getEast 0
+eq
+if-goto IF_TRUE32
+goto IF_FALSE32
+label IF_TRUE32
+push constant 0
+push argument 2
+add
+push constant 1
+neg
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 1
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 1
+push argument 2
+add
+push constant 1
+push argument 3
+add
+call XY.new 2
+call Constants.getDeltaList 4
+return
+label IF_FALSE32
+push argument 1
+call Constants.getWest 0
+eq
+if-goto IF_TRUE33
+goto IF_FALSE33
+label IF_TRUE33
+push constant 1
+neg
+push argument 2
+add
+push constant 1
+neg
+push argument 3
+add
+call XY.new 2
+push constant 1
+neg
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 1
+push argument 3
+add
+call XY.new 2
+call Constants.getDeltaList 4
+return
+label IF_FALSE33
+push argument 1
+call Constants.getSouth 0
+eq
+if-goto IF_TRUE34
+goto IF_FALSE34
+label IF_TRUE34
+push constant 1
+push argument 2
+add
+push constant 1
+neg
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 1
+neg
+push argument 3
+add
+call XY.new 2
+push constant 0
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+push constant 1
+neg
+push argument 2
+add
+push constant 0
+push argument 3
+add
+call XY.new 2
+call Constants.getDeltaList 4
+return
+label IF_FALSE34
+label IF_FALSE30
+push constant 0
+call Array.new 1
+return
+function Constants.get2x2 0
+push constant 0
+return
+function Constants.get4x1 0
+push constant 1
+return
+function Constants.get3x2 0
+push constant 2
+return
+function Constants.getDelta 0
+push argument 0
+call Constants.get2x2 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push argument 1
+call Constants.getNorth 0
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push argument 2
+call Constants.getEast 0
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push argument 3
+call Constants.getPoint2 0
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE3
+push argument 3
+call Constants.getPoint3 0
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE4
+push argument 3
+call Constants.getPoint4 0
+eq
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE5
+push argument 3
+call Constants.getPoint5 0
+eq
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE6
+label IF_FALSE2
+push argument 2
+call Constants.getWest 0
+eq
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+push argument 3
+call Constants.getPoint2 0
+eq
+if-goto IF_TRUE8
+goto IF_FALSE8
+label IF_TRUE8
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE8
+push argument 3
+call Constants.getPoint3 0
+eq
+if-goto IF_TRUE9
+goto IF_FALSE9
+label IF_TRUE9
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE9
+push argument 3
+call Constants.getPoint4 0
+eq
+if-goto IF_TRUE10
+goto IF_FALSE10
+label IF_TRUE10
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE10
+push argument 3
+call Constants.getPoint5 0
+eq
+if-goto IF_TRUE11
+goto IF_FALSE11
+label IF_TRUE11
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE11
+label IF_FALSE7
+label IF_FALSE1
+push argument 1
+call Constants.getEast 0
+eq
+if-goto IF_TRUE12
+goto IF_FALSE12
+label IF_TRUE12
+push argument 2
+call Constants.getSouth 0
+eq
+if-goto IF_TRUE13
+goto IF_FALSE13
+label IF_TRUE13
+push argument 3
+call Constants.getPoint2 0
+eq
+if-goto IF_TRUE14
+goto IF_FALSE14
+label IF_TRUE14
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE14
+push argument 3
+call Constants.getPoint3 0
+eq
+if-goto IF_TRUE15
+goto IF_FALSE15
+label IF_TRUE15
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE15
+push argument 3
+call Constants.getPoint4 0
+eq
+if-goto IF_TRUE16
+goto IF_FALSE16
+label IF_TRUE16
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE16
+push argument 3
+call Constants.getPoint5 0
+eq
+if-goto IF_TRUE17
+goto IF_FALSE17
+label IF_TRUE17
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE17
+label IF_FALSE13
+push argument 2
+call Constants.getNorth 0
+eq
+if-goto IF_TRUE18
+goto IF_FALSE18
+label IF_TRUE18
+push argument 3
+call Constants.getPoint2 0
+eq
+if-goto IF_TRUE19
+goto IF_FALSE19
+label IF_TRUE19
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE19
+push argument 3
+call Constants.getPoint3 0
+eq
+if-goto IF_TRUE20
+goto IF_FALSE20
+label IF_TRUE20
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE20
+push argument 3
+call Constants.getPoint4 0
+eq
+if-goto IF_TRUE21
+goto IF_FALSE21
+label IF_TRUE21
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE21
+push argument 3
+call Constants.getPoint5 0
+eq
+if-goto IF_TRUE22
+goto IF_FALSE22
+label IF_TRUE22
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE22
+label IF_FALSE18
+label IF_FALSE12
+push argument 1
+call Constants.getSouth 0
+eq
+if-goto IF_TRUE23
+goto IF_FALSE23
+label IF_TRUE23
+push argument 2
+call Constants.getWest 0
+eq
+if-goto IF_TRUE24
+goto IF_FALSE24
+label IF_TRUE24
+push argument 3
+call Constants.getPoint2 0
+eq
+if-goto IF_TRUE25
+goto IF_FALSE25
+label IF_TRUE25
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE25
+push argument 3
+call Constants.getPoint3 0
+eq
+if-goto IF_TRUE26
+goto IF_FALSE26
+label IF_TRUE26
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE26
+push argument 3
+call Constants.getPoint4 0
+eq
+if-goto IF_TRUE27
+goto IF_FALSE27
+label IF_TRUE27
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE27
+push argument 3
+call Constants.getPoint5 0
+eq
+if-goto IF_TRUE28
+goto IF_FALSE28
+label IF_TRUE28
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE28
+label IF_FALSE24
+push argument 2
+call Constants.getEast 0
+eq
+if-goto IF_TRUE29
+goto IF_FALSE29
+label IF_TRUE29
+push argument 3
+call Constants.getPoint2 0
+eq
+if-goto IF_TRUE30
+goto IF_FALSE30
+label IF_TRUE30
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE30
+push argument 3
+call Constants.getPoint3 0
+eq
+if-goto IF_TRUE31
+goto IF_FALSE31
+label IF_TRUE31
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE31
+push argument 3
+call Constants.getPoint4 0
+eq
+if-goto IF_TRUE32
+goto IF_FALSE32
+label IF_TRUE32
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE32
+push argument 3
+call Constants.getPoint5 0
+eq
+if-goto IF_TRUE33
+goto IF_FALSE33
+label IF_TRUE33
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE33
+label IF_FALSE29
+label IF_FALSE23
+push argument 1
+call Constants.getWest 0
+eq
+if-goto IF_TRUE34
+goto IF_FALSE34
+label IF_TRUE34
+push argument 2
+call Constants.getNorth 0
+eq
+if-goto IF_TRUE35
+goto IF_FALSE35
+label IF_TRUE35
+push argument 3
+call Constants.getPoint2 0
+eq
+if-goto IF_TRUE36
+goto IF_FALSE36
+label IF_TRUE36
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE36
+push argument 3
+call Constants.getPoint3 0
+eq
+if-goto IF_TRUE37
+goto IF_FALSE37
+label IF_TRUE37
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE37
+push argument 3
+call Constants.getPoint4 0
+eq
+if-goto IF_TRUE38
+goto IF_FALSE38
+label IF_TRUE38
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE38
+push argument 3
+call Constants.getPoint5 0
+eq
+if-goto IF_TRUE39
+goto IF_FALSE39
+label IF_TRUE39
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE39
+label IF_FALSE35
+push argument 2
+call Constants.getSouth 0
+eq
+if-goto IF_TRUE40
+goto IF_FALSE40
+label IF_TRUE40
+push argument 3
+call Constants.getPoint2 0
+eq
+if-goto IF_TRUE41
+goto IF_FALSE41
+label IF_TRUE41
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE41
+push argument 3
+call Constants.getPoint3 0
+eq
+if-goto IF_TRUE42
+goto IF_FALSE42
+label IF_TRUE42
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE42
+push argument 3
+call Constants.getPoint4 0
+eq
+if-goto IF_TRUE43
+goto IF_FALSE43
+label IF_TRUE43
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE43
+push argument 3
+call Constants.getPoint5 0
+eq
+if-goto IF_TRUE44
+goto IF_FALSE44
+label IF_TRUE44
+push constant 0
+push constant 0
+call XY.new 2
+return
+label IF_FALSE44
+label IF_FALSE40
+label IF_FALSE34
+label IF_FALSE0
+push argument 0
+call Constants.get4x1 0
+eq
+if-goto IF_TRUE45
+goto IF_FALSE45
+label IF_TRUE45
+push argument 1
+call Constants.getNorth 0
+eq
+if-goto IF_TRUE46
+goto IF_FALSE46
+label IF_TRUE46
+push argument 2
+call Constants.getEast 0
+eq
+if-goto IF_TRUE47
+goto IF_FALSE47
+label IF_TRUE47
+push argument 3
+call Constants.getPoint2 0
+eq
+if-goto IF_TRUE48
+goto IF_FALSE48
+label IF_TRUE48
+push constant 2
+neg
+push constant 0
+call XY.new 2
+return
+label IF_FALSE48
+push argument 3
+call Constants.getPoint3 0
+eq
+if-goto IF_TRUE49
+goto IF_FALSE49
+label IF_TRUE49
+push constant 1
+push constant 0
+call XY.new 2
+return
+label IF_FALSE49
+push argument 3
+call Constants.getPoint4 0
+eq
+if-goto IF_TRUE50
+goto IF_FALSE50
+label IF_TRUE50
+push constant 2
+neg
+push constant 1
+neg
+call XY.new 2
+return
+label IF_FALSE50
+push argument 3
+call Constants.getPoint5 0
+eq
+if-goto IF_TRUE51
+goto IF_FALSE51
+label IF_TRUE51
+push constant 1
+push constant 2
+call XY.new 2
+return
+label IF_FALSE51
+label IF_FALSE47
+push argument 2
+call Constants.getWest 0
+eq
+if-goto IF_TRUE52
+goto IF_FALSE52
+label IF_TRUE52
+push argument 3
+call Constants.getPoint2 0
+eq
+if-goto IF_TRUE53
+goto IF_FALSE53
+label IF_TRUE53
+push constant 1
+neg
+push constant 0
+call XY.new 2
+return
+label IF_FALSE53
+push argument 3
+call Constants.getPoint3 0
+eq
+if-goto IF_TRUE54
+goto IF_FALSE54
+label IF_TRUE54
+push constant 2
+push constant 0
+call XY.new 2
+return
+label IF_FALSE54
+push argument 3
+call Constants.getPoint4 0
+eq
+if-goto IF_TRUE55
+goto IF_FALSE55
+label IF_TRUE55
+push constant 1
+neg
+push constant 2
+call XY.new 2
+return
+label IF_FALSE55
+push argument 3
+call Constants.getPoint5 0
+eq
+if-goto IF_TRUE56
+goto IF_FALSE56
+label IF_TRUE56
+push constant 2
+push constant 1
+neg
+call XY.new 2
+return
+label IF_FALSE56
+label IF_FALSE52
+label IF_FALSE46
+push argument 1
+call Constants.getEast 0
+eq
+if-goto IF_TRUE57
+goto IF_FALSE57
+label IF_TRUE57
+push argument 2
+call Constants.getSouth 0
+eq
+if-goto IF_TRUE58
+goto IF_FALSE58
+label IF_TRUE58
+push argument 3
+call Constants.getPoint2 0
+eq
+if-goto IF_TRUE59
+goto IF_FALSE59
+label IF_TRUE59
+push constant 1
+neg
+push constant 0
+call XY.new 2
+return
+label IF_FALSE59
+push argument 3
+call Constants.getPoint3 0
+eq
+if-goto IF_TRUE60
+goto IF_FALSE60
+label IF_TRUE60
+push constant 2
+push constant 0
+call XY.new 2
+return
+label IF_FALSE60
+push argument 3
+call Constants.getPoint4 0
+eq
+if-goto IF_TRUE61
+goto IF_FALSE61
+label IF_TRUE61
+push constant 1
+neg
+push constant 2
+call XY.new 2
+return
+label IF_FALSE61
+push argument 3
+call Constants.getPoint5 0
+eq
+if-goto IF_TRUE62
+goto IF_FALSE62
+label IF_TRUE62
+push constant 2
+push constant 1
+neg
+call XY.new 2
+return
+label IF_FALSE62
+label IF_FALSE58
+push argument 2
+call Constants.getNorth 0
+eq
+if-goto IF_TRUE63
+goto IF_FALSE63
+label IF_TRUE63
+push argument 3
+call Constants.getPoint2 0
+eq
+if-goto IF_TRUE64
+goto IF_FALSE64
+label IF_TRUE64
+push constant 2
+push constant 0
+call XY.new 2
+return
+label IF_FALSE64
+push argument 3
+call Constants.getPoint3 0
+eq
+if-goto IF_TRUE65
+goto IF_FALSE65
+label IF_TRUE65
+push constant 1
+neg
+push constant 0
+call XY.new 2
+return
+label IF_FALSE65
+push argument 3
+call Constants.getPoint4 0
+eq
+if-goto IF_TRUE66
+goto IF_FALSE66
+label IF_TRUE66
+push constant 2
+push constant 1
+call XY.new 2
+return
+label IF_FALSE66
+push argument 3
+call Constants.getPoint5 0
+eq
+if-goto IF_TRUE67
+goto IF_FALSE67
+label IF_TRUE67
+push constant 1
+neg
+push constant 2
+neg
+call XY.new 2
+return
+label IF_FALSE67
+label IF_FALSE63
+label IF_FALSE57
+push argument 1
+call Constants.getSouth 0
+eq
+if-goto IF_TRUE68
+goto IF_FALSE68
+label IF_TRUE68
+push argument 2
+call Constants.getWest 0
+eq
+if-goto IF_TRUE69
+goto IF_FALSE69
+label IF_TRUE69
+push argument 3
+call Constants.getPoint2 0
+eq
+if-goto IF_TRUE70
+goto IF_FALSE70
+label IF_TRUE70
+push constant 2
+push constant 0
+call XY.new 2
+return
+label IF_FALSE70
+push argument 3
+call Constants.getPoint3 0
+eq
+if-goto IF_TRUE71
+goto IF_FALSE71
+label IF_TRUE71
+push constant 1
+neg
+push constant 0
+call XY.new 2
+return
+label IF_FALSE71
+push argument 3
+call Constants.getPoint4 0
+eq
+if-goto IF_TRUE72
+goto IF_FALSE72
+label IF_TRUE72
+push constant 2
+push constant 1
+call XY.new 2
+return
+label IF_FALSE72
+push argument 3
+call Constants.getPoint5 0
+eq
+if-goto IF_TRUE73
+goto IF_FALSE73
+label IF_TRUE73
+push constant 1
+neg
+push constant 2
+neg
+call XY.new 2
+return
+label IF_FALSE73
+label IF_FALSE69
+push argument 2
+call Constants.getEast 0
+eq
+if-goto IF_TRUE74
+goto IF_FALSE74
+label IF_TRUE74
+push argument 3
+call Constants.getPoint2 0
+eq
+if-goto IF_TRUE75
+goto IF_FALSE75
+label IF_TRUE75
+push constant 1
+push constant 0
+call XY.new 2
+return
+label IF_FALSE75
+push argument 3
+call Constants.getPoint3 0
+eq
+if-goto IF_TRUE76
+goto IF_FALSE76
+label IF_TRUE76
+push constant 2
+neg
+push constant 0
+call XY.new 2
+return
+label IF_FALSE76
+push argument 3
+call Constants.getPoint4 0
+eq
+if-goto IF_TRUE77
+goto IF_FALSE77
+label IF_TRUE77
+push constant 1
+push constant 2
+neg
+call XY.new 2
+return
+label IF_FALSE77
+push argument 3
+call Constants.getPoint5 0
+eq
+if-goto IF_TRUE78
+goto IF_FALSE78
+label IF_TRUE78
+push constant 2
+neg
+push constant 1
+call XY.new 2
+return
+label IF_FALSE78
+label IF_FALSE74
+label IF_FALSE68
+push argument 1
+call Constants.getWest 0
+eq
+if-goto IF_TRUE79
+goto IF_FALSE79
+label IF_TRUE79
+push argument 2
+call Constants.getNorth 0
+eq
+if-goto IF_TRUE80
+goto IF_FALSE80
+label IF_TRUE80
+push argument 3
+call Constants.getPoint2 0
+eq
+if-goto IF_TRUE81
+goto IF_FALSE81
+label IF_TRUE81
+push constant 1
+push constant 0
+call XY.new 2
+return
+label IF_FALSE81
+push argument 3
+call Constants.getPoint3 0
+eq
+if-goto IF_TRUE82
+goto IF_FALSE82
+label IF_TRUE82
+push constant 2
+neg
+push constant 0
+call XY.new 2
+return
+label IF_FALSE82
+push argument 3
+call Constants.getPoint4 0
+eq
+if-goto IF_TRUE83
+goto IF_FALSE83
+label IF_TRUE83
+push constant 1
+push constant 2
+neg
+call XY.new 2
+return
+label IF_FALSE83
+push argument 3
+call Constants.getPoint5 0
+eq
+if-goto IF_TRUE84
+goto IF_FALSE84
+label IF_TRUE84
+push constant 2
+neg
+push constant 1
+call XY.new 2
+return
+label IF_FALSE84
+label IF_FALSE80
+push argument 2
+call Constants.getSouth 0
+eq
+if-goto IF_TRUE85
+goto IF_FALSE85
+label IF_TRUE85
+push argument 3
+call Constants.getPoint2 0
+eq
+if-goto IF_TRUE86
+goto IF_FALSE86
+label IF_TRUE86
+push constant 2
+neg
+push constant 0
+call XY.new 2
+return
+label IF_FALSE86
+push argument 3
+call Constants.getPoint3 0
+eq
+if-goto IF_TRUE87
+goto IF_FALSE87
+label IF_TRUE87
+push constant 1
+push constant 0
+call XY.new 2
+return
+label IF_FALSE87
+push argument 3
+call Constants.getPoint4 0
+eq
+if-goto IF_TRUE88
+goto IF_FALSE88
+label IF_TRUE88
+push constant 2
+neg
+push constant 1
+neg
+call XY.new 2
+return
+label IF_FALSE88
+push argument 3
+call Constants.getPoint5 0
+eq
+if-goto IF_TRUE89
+goto IF_FALSE89
+label IF_TRUE89
+push constant 1
+push constant 2
+call XY.new 2
+return
+label IF_FALSE89
+label IF_FALSE85
+label IF_FALSE79
+label IF_FALSE45
+push argument 0
+call Constants.get3x2 0
+eq
+if-goto IF_TRUE90
+goto IF_FALSE90
+label IF_TRUE90
+push argument 1
+call Constants.getNorth 0
+eq
+if-goto IF_TRUE91
+goto IF_FALSE91
+label IF_TRUE91
+push argument 2
+call Constants.getEast 0
+eq
+if-goto IF_TRUE92
+goto IF_FALSE92
+label IF_TRUE92
+push argument 3
+call Constants.getPoint2 0
+eq
+if-goto IF_TRUE93
+goto IF_FALSE93
+label IF_TRUE93
+push constant 1
+neg
+push constant 0
+call XY.new 2
+return
+label IF_FALSE93
+push argument 3
+call Constants.getPoint3 0
+eq
+if-goto IF_TRUE94
+goto IF_FALSE94
+label IF_TRUE94
+push constant 1
+neg
+push constant 1
+call XY.new 2
+return
+label IF_FALSE94
+push argument 3
+call Constants.getPoint4 0
+eq
+if-goto IF_TRUE95
+goto IF_FALSE95
+label IF_TRUE95
+push constant 0
+push constant 2
+neg
+call XY.new 2
+return
+label IF_FALSE95
+push argument 3
+call Constants.getPoint5 0
+eq
+if-goto IF_TRUE96
+goto IF_FALSE96
+label IF_TRUE96
+push constant 1
+neg
+push constant 2
+neg
+call XY.new 2
+return
+label IF_FALSE96
+label IF_FALSE92
+push argument 2
+call Constants.getWest 0
+eq
+if-goto IF_TRUE97
+goto IF_FALSE97
+label IF_TRUE97
+push argument 3
+call Constants.getPoint2 0
+eq
+if-goto IF_TRUE98
+goto IF_FALSE98
+label IF_TRUE98
+push constant 1
+push constant 0
+call XY.new 2
+return
+label IF_FALSE98
+push argument 3
+call Constants.getPoint3 0
+eq
+if-goto IF_TRUE99
+goto IF_FALSE99
+label IF_TRUE99
+push constant 1
+push constant 1
+call XY.new 2
+return
+label IF_FALSE99
+push argument 3
+call Constants.getPoint4 0
+eq
+if-goto IF_TRUE100
+goto IF_FALSE100
+label IF_TRUE100
+push constant 0
+push constant 2
+neg
+call XY.new 2
+return
+label IF_FALSE100
+push argument 3
+call Constants.getPoint5 0
+eq
+if-goto IF_TRUE101
+goto IF_FALSE101
+label IF_TRUE101
+push constant 1
+push constant 2
+neg
+call XY.new 2
+return
+label IF_FALSE101
+label IF_FALSE97
+label IF_FALSE91
+push argument 1
+call Constants.getEast 0
+eq
+if-goto IF_TRUE102
+goto IF_FALSE102
+label IF_TRUE102
+push argument 2
+call Constants.getSouth 0
+eq
+if-goto IF_TRUE103
+goto IF_FALSE103
+label IF_TRUE103
+push argument 3
+call Constants.getPoint2 0
+eq
+if-goto IF_TRUE104
+goto IF_FALSE104
+label IF_TRUE104
+push constant 1
+push constant 0
+call XY.new 2
+return
+label IF_FALSE104
+push argument 3
+call Constants.getPoint3 0
+eq
+if-goto IF_TRUE105
+goto IF_FALSE105
+label IF_TRUE105
+push constant 1
+push constant 1
+neg
+call XY.new 2
+return
+label IF_FALSE105
+push argument 3
+call Constants.getPoint4 0
+eq
+if-goto IF_TRUE106
+goto IF_FALSE106
+label IF_TRUE106
+push constant 0
+push constant 2
+call XY.new 2
+return
+label IF_FALSE106
+push argument 3
+call Constants.getPoint5 0
+eq
+if-goto IF_TRUE107
+goto IF_FALSE107
+label IF_TRUE107
+push constant 1
+push constant 2
+call XY.new 2
+return
+label IF_FALSE107
+label IF_FALSE103
+push argument 2
+call Constants.getNorth 0
+eq
+if-goto IF_TRUE108
+goto IF_FALSE108
+label IF_TRUE108
+push argument 3
+call Constants.getPoint2 0
+eq
+if-goto IF_TRUE109
+goto IF_FALSE109
+label IF_TRUE109
+push constant 1
+push constant 0
+call XY.new 2
+return
+label IF_FALSE109
+push argument 3
+call Constants.getPoint3 0
+eq
+if-goto IF_TRUE110
+goto IF_FALSE110
+label IF_TRUE110
+push constant 1
+push constant 1
+neg
+call XY.new 2
+return
+label IF_FALSE110
+push argument 3
+call Constants.getPoint4 0
+eq
+if-goto IF_TRUE111
+goto IF_FALSE111
+label IF_TRUE111
+push constant 0
+push constant 2
+call XY.new 2
+return
+label IF_FALSE111
+push argument 3
+call Constants.getPoint5 0
+eq
+if-goto IF_TRUE112
+goto IF_FALSE112
+label IF_TRUE112
+push constant 1
+push constant 2
+call XY.new 2
+return
+label IF_FALSE112
+label IF_FALSE108
+label IF_FALSE102
+push argument 1
+call Constants.getSouth 0
+eq
+if-goto IF_TRUE113
+goto IF_FALSE113
+label IF_TRUE113
+push argument 2
+call Constants.getWest 0
+eq
+if-goto IF_TRUE114
+goto IF_FALSE114
+label IF_TRUE114
+push argument 3
+call Constants.getPoint2 0
+eq
+if-goto IF_TRUE115
+goto IF_FALSE115
+label IF_TRUE115
+push constant 1
+push constant 0
+call XY.new 2
+return
+label IF_FALSE115
+push argument 3
+call Constants.getPoint3 0
+eq
+if-goto IF_TRUE116
+goto IF_FALSE116
+label IF_TRUE116
+push constant 1
+push constant 1
+call XY.new 2
+return
+label IF_FALSE116
+push argument 3
+call Constants.getPoint4 0
+eq
+if-goto IF_TRUE117
+goto IF_FALSE117
+label IF_TRUE117
+push constant 0
+push constant 2
+neg
+call XY.new 2
+return
+label IF_FALSE117
+push argument 3
+call Constants.getPoint5 0
+eq
+if-goto IF_TRUE118
+goto IF_FALSE118
+label IF_TRUE118
+push constant 1
+push constant 2
+neg
+call XY.new 2
+return
+label IF_FALSE118
+label IF_FALSE114
+push argument 2
+call Constants.getEast 0
+eq
+if-goto IF_TRUE119
+goto IF_FALSE119
+label IF_TRUE119
+push argument 3
+call Constants.getPoint2 0
+eq
+if-goto IF_TRUE120
+goto IF_FALSE120
+label IF_TRUE120
+push constant 1
+neg
+push constant 0
+call XY.new 2
+return
+label IF_FALSE120
+push argument 3
+call Constants.getPoint3 0
+eq
+if-goto IF_TRUE121
+goto IF_FALSE121
+label IF_TRUE121
+push constant 1
+neg
+push constant 1
+call XY.new 2
+return
+label IF_FALSE121
+push argument 3
+call Constants.getPoint4 0
+eq
+if-goto IF_TRUE122
+goto IF_FALSE122
+label IF_TRUE122
+push constant 0
+push constant 2
+neg
+call XY.new 2
+return
+label IF_FALSE122
+push argument 3
+call Constants.getPoint5 0
+eq
+if-goto IF_TRUE123
+goto IF_FALSE123
+label IF_TRUE123
+push constant 1
+neg
+push constant 2
+neg
+call XY.new 2
+return
+label IF_FALSE123
+label IF_FALSE119
+label IF_FALSE113
+push argument 1
+call Constants.getWest 0
+eq
+if-goto IF_TRUE124
+goto IF_FALSE124
+label IF_TRUE124
+push argument 2
+call Constants.getNorth 0
+eq
+if-goto IF_TRUE125
+goto IF_FALSE125
+label IF_TRUE125
+push argument 3
+call Constants.getPoint2 0
+eq
+if-goto IF_TRUE126
+goto IF_FALSE126
+label IF_TRUE126
+push constant 1
+neg
+push constant 0
+call XY.new 2
+return
+label IF_FALSE126
+push argument 3
+call Constants.getPoint3 0
+eq
+if-goto IF_TRUE127
+goto IF_FALSE127
+label IF_TRUE127
+push constant 1
+neg
+push constant 1
+neg
+call XY.new 2
+return
+label IF_FALSE127
+push argument 3
+call Constants.getPoint4 0
+eq
+if-goto IF_TRUE128
+goto IF_FALSE128
+label IF_TRUE128
+push constant 0
+push constant 2
+call XY.new 2
+return
+label IF_FALSE128
+push argument 3
+call Constants.getPoint5 0
+eq
+if-goto IF_TRUE129
+goto IF_FALSE129
+label IF_TRUE129
+push constant 1
+neg
+push constant 2
+call XY.new 2
+return
+label IF_FALSE129
+label IF_FALSE125
+push argument 2
+call Constants.getSouth 0
+eq
+if-goto IF_TRUE130
+goto IF_FALSE130
+label IF_TRUE130
+push argument 3
+call Constants.getPoint2 0
+eq
+if-goto IF_TRUE131
+goto IF_FALSE131
+label IF_TRUE131
+push constant 1
+neg
+push constant 0
+call XY.new 2
+return
+label IF_FALSE131
+push argument 3
+call Constants.getPoint3 0
+eq
+if-goto IF_TRUE132
+goto IF_FALSE132
+label IF_TRUE132
+push constant 1
+neg
+push constant 1
+neg
+call XY.new 2
+return
+label IF_FALSE132
+push argument 3
+call Constants.getPoint4 0
+eq
+if-goto IF_TRUE133
+goto IF_FALSE133
+label IF_TRUE133
+push constant 0
+push constant 2
+call XY.new 2
+return
+label IF_FALSE133
+push argument 3
+call Constants.getPoint5 0
+eq
+if-goto IF_TRUE134
+goto IF_FALSE134
+label IF_TRUE134
+push constant 1
+neg
+push constant 2
+call XY.new 2
+return
+label IF_FALSE134
+label IF_FALSE130
+label IF_FALSE124
+label IF_FALSE90
+push constant 0
+push constant 0
+call XY.new 2
+return
+function Constants.getNewFacing 0
+push argument 0
+call Constants.getNorth 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push argument 1
+call Constants.getClockwise 0
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+call Constants.getEast 0
+return
+label IF_FALSE1
+push argument 1
+call Constants.getCounterclockwise 0
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+call Constants.getWest 0
+return
+label IF_FALSE2
+label IF_FALSE0
+push argument 0
+call Constants.getEast 0
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push argument 1
+call Constants.getClockwise 0
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+call Constants.getSouth 0
+return
+label IF_FALSE4
+push argument 1
+call Constants.getCounterclockwise 0
+eq
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+call Constants.getNorth 0
+return
+label IF_FALSE5
+label IF_FALSE3
+push argument 0
+call Constants.getSouth 0
+eq
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push argument 1
+call Constants.getClockwise 0
+eq
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+call Constants.getWest 0
+return
+label IF_FALSE7
+push argument 1
+call Constants.getCounterclockwise 0
+eq
+if-goto IF_TRUE8
+goto IF_FALSE8
+label IF_TRUE8
+call Constants.getEast 0
+return
+label IF_FALSE8
+label IF_FALSE6
+push argument 0
+call Constants.getWest 0
+eq
+if-goto IF_TRUE9
+goto IF_FALSE9
+label IF_TRUE9
+push argument 1
+call Constants.getClockwise 0
+eq
+if-goto IF_TRUE10
+goto IF_FALSE10
+label IF_TRUE10
+call Constants.getNorth 0
+return
+label IF_FALSE10
+push argument 1
+call Constants.getCounterclockwise 0
+eq
+if-goto IF_TRUE11
+goto IF_FALSE11
+label IF_TRUE11
+call Constants.getSouth 0
+return
+label IF_FALSE11
+label IF_FALSE9
+push constant 1
+neg
+return

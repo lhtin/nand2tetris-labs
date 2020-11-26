@@ -1,0 +1,9 @@
+class Main {
+    function void main() {
+        var TetrisEngine game;
+        let game = TetrisEngine.new();
+        do game.run();
+        do game.dispose();
+        return;
+    }
+}

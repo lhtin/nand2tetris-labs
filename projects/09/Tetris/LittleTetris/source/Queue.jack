@@ -1,0 +1,59 @@
+class Queue {
+    field Array nextQueue;
+    field int at, current, next;
+    field Random random;
+    constructor Queue new() {
+        let random = Random.new(2);
+        let nextQueue = generateBag();
+        let at = 0;
+        let next = -1;
+        return this;
+    }
+    method int getNext() {
+        let current = nextQueue[at];
+        if (at = 6) {
+            do nextQueue.dispose();
+            let nextQueue = generateBag();
+            let at = 0;
+        } else {
+            let at = at + 1;
+        }
+        let next = nextQueue[at];
+        return current;
+    }
+    method int getNextTetromino() {
+        return next;
+    }
+    method Array generateBag() {
+        var Array bag;
+        var int at, temp, rand1, rand2;
+        let bag = Array.new(7);
+        let bag[0] = Constants.getO();
+        let bag[1] = Constants.getI();
+        let bag[2] = Constants.getT();
+        let bag[3] = Constants.getL();
+        let bag[4] = Constants.getJ();
+        let bag[5] = Constants.getS();
+        let bag[6] = Constants.getZ();
+        let at = 0;
+        while (at < 7) {
+            let rand1 = random.getRandom();
+            let rand2 = random.getRandom();
+            let temp = bag[rand1];
+            let bag[rand1] = bag[rand2];
+            let bag[rand2] = temp;
+            let at = at + 1;
+        }
+        let at = 0;
+        while (at < 7) {
+            let at = at + 1;
+        }
+        return bag;
+    }
+    method void dispose() {
+        do nextQueue.dispose();
+        do random.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+}

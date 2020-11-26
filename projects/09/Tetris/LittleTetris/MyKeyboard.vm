@@ -1,0 +1,31 @@
+function MyKeyboard.getCurrentKey 0
+call Keyboard.keyPressed 0
+return
+function MyKeyboard.getPressedKey 2
+call Keyboard.keyPressed 0
+pop local 0
+label WHILE_EXP0
+push local 0
+push constant 0
+eq
+not
+if-goto WHILE_END0
+call Keyboard.keyPressed 0
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+call Keyboard.keyPressed 0
+pop local 1
+label WHILE_EXP1
+push local 1
+push constant 0
+eq
+not
+not
+if-goto WHILE_END1
+call Keyboard.keyPressed 0
+pop local 1
+goto WHILE_EXP1
+label WHILE_END1
+push local 0
+return

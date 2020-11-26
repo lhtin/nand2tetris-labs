@@ -1,0 +1,198 @@
+function Queue.new 0
+push constant 5
+call Memory.alloc 1
+pop pointer 0
+push constant 2
+call Random.new 1
+pop this 4
+push pointer 0
+call Queue.generateBag 1
+pop this 0
+push constant 0
+pop this 1
+push constant 1
+neg
+pop this 3
+push pointer 0
+return
+function Queue.getNext 0
+push argument 0
+pop pointer 0
+push this 1
+push this 0
+add
+pop pointer 1
+push that 0
+pop this 2
+push this 1
+push constant 6
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 0
+call Array.dispose 1
+pop temp 0
+push pointer 0
+call Queue.generateBag 1
+pop this 0
+push constant 0
+pop this 1
+goto IF_END0
+label IF_FALSE0
+push this 1
+push constant 1
+add
+pop this 1
+label IF_END0
+push this 1
+push this 0
+add
+pop pointer 1
+push that 0
+pop this 3
+push this 2
+return
+function Queue.getNextTetromino 0
+push argument 0
+pop pointer 0
+push this 3
+return
+function Queue.generateBag 5
+push argument 0
+pop pointer 0
+push constant 7
+call Array.new 1
+pop local 0
+push constant 0
+push local 0
+add
+call Constants.getO 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 1
+push local 0
+add
+call Constants.getI 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 2
+push local 0
+add
+call Constants.getT 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 3
+push local 0
+add
+call Constants.getL 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 4
+push local 0
+add
+call Constants.getJ 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 5
+push local 0
+add
+call Constants.getS 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 6
+push local 0
+add
+call Constants.getZ 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 0
+pop local 1
+label WHILE_EXP0
+push local 1
+push constant 7
+lt
+not
+if-goto WHILE_END0
+push this 4
+call Random.getRandom 1
+pop local 3
+push this 4
+call Random.getRandom 1
+pop local 4
+push local 3
+push local 0
+add
+pop pointer 1
+push that 0
+pop local 2
+push local 3
+push local 0
+add
+push local 4
+push local 0
+add
+pop pointer 1
+push that 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 4
+push local 0
+add
+push local 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 1
+push constant 1
+add
+pop local 1
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+pop local 1
+label WHILE_EXP1
+push local 1
+push constant 7
+lt
+not
+if-goto WHILE_END1
+push local 1
+push constant 1
+add
+pop local 1
+goto WHILE_EXP1
+label WHILE_END1
+push local 0
+return
+function Queue.dispose 0
+push argument 0
+pop pointer 0
+push this 0
+call Array.dispose 1
+pop temp 0
+push this 4
+call Random.dispose 1
+pop temp 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return

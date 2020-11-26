@@ -1,0 +1,42 @@
+class MyOutput {
+    function void printString(String str) {
+        do Output.printString(str);
+        do str.dispose();
+        return;
+    }
+    function void printInt(int n) {
+        do Output.printInt(n);
+        return;
+    }
+    function void println() {
+        do Output.println();
+        return;
+    }
+    function void printDelta(XY xy) {
+        do MyOutput.printString("(");
+        do MyOutput.printInt(xy.getX());
+        do MyOutput.printString(",");
+        do MyOutput.printInt(xy.getY());
+        do MyOutput.printString(")");
+        return;
+    }
+    function void printIntWithTag(String tag, int n) {
+        do MyOutput.printString(tag);
+        do MyOutput.printInt(n);
+        return;
+    }
+    function void printStringList(MyArray list) {
+        var int len, at;
+        var Array a;
+        let a = list.getA();
+        let len = list.getLen();
+        let at = 0;
+        while(at < len) {
+            do MyOutput.printString(a[at]);
+            do MyOutput.println();
+            let at = at + 1;
+        }
+        do list.dispose();
+        return;
+    }
+}

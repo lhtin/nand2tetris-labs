@@ -1,0 +1,30 @@
+class Snapshot {
+    field XY d;
+    field int bit;
+    constructor Snapshot new() {
+        let d = null;
+        let bit = 0;
+        return this;
+    }
+    method void setXY(XY d1) {
+        let d = d1;
+        return;
+    }
+    method XY getD() {
+        return d;
+    }
+    method void setBit(int bit1) {
+        let bit = bit1;
+        return;
+    }
+    method int getBit() {
+        return bit;
+    }
+    method void dispose() {
+        if (~(d = null)) {
+            do d.dispose();
+        }
+        do Memory.deAlloc(this);
+        return;
+    }
+}
