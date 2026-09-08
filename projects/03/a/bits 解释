@@ -1,0 +1,58 @@
+storedValue = 盒子当前记住的旧值
+nextValue   = 下一个时钟到来时，要写进盒子的值
+in          = 外部送来的新值
+load        = 是否允许写入
+out         = 盒子当前输出的值
+DFF 这一行：
+DFF(in=nextValue, out=out, out=storedValue);
+表示一个 DFF 的输出同时连到两处：
+             ┌──────────────────→ out
+DFF 的输出 ──┤
+             └──────────────────→ storedValue
+所以在任何一个时钟周期里：
+storedValue = out = DFF 当前保存的旧值
+Mux 的规则是：
+sel = 0 → 选择 a
+sel = 1 → 选择 b
+因此：
+Mux(a=storedValue, b=in, sel=load, out=nextValue);
+等价于：
+load = 0 → nextValue = storedValue
+load = 1 → nextValue = in
+然后 nextValue 被送进 DFF，等待下一个时钟边沿写入：
+nextValue ──→ DFF 输入
+完整线路是：
+                      ┌───────────────┐
+in ──────────────────→│ b             │
+                      │     Mux        │──→ nextValue ──→ DFF ──→ out
+storedValue ─────────→│ a             │                    │
+                      │ sel = load    │                    └──→ storedValue
+                      └───────────────┘
+当 load = 0 时，Mux 选 storedValue：
+nextValue = storedValue
+DFF 在下一个时钟仍然写回原来的值，因此它保持不变：
+原来保存 0 → 仍保存 0
+原来保存 1 → 仍保存 1
+当 load = 1 时，Mux 选外部输入 in：
+nextValue = in
+下一个时钟到来，DFF 才更新：
+out[t+1] = in[t]
+举个具体过程。假设当前 DFF 已保存 0：
+storedValue = out = 0
+外部输入是：
+in = 1
+如果：
+load = 0
+那么：
+Mux 选 storedValue
+nextValue = 0
+下一个时钟后，DFF 仍保存 0
+out = 0
+如果改成：
+load = 1
+那么：
+Mux 选 in
+nextValue = 1
+下一个时钟后，DFF 保存 1
+out = 1
+所以反馈线 storedValue → Mux → DFF 的用途是：在 load=0 时，把旧值重新送回自己，让寄存器保持原来的内容。
