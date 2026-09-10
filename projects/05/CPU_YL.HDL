@@ -39,39 +39,78 @@ CHIP CPU {
     //instruction[5] ：ALU的输出是否写入A寄存器的判断位
     //instruction[4] ：ALU的输出是否写入D寄存器的判断位
     //instruction[3] ：ALU的输出是否写入M存储器的判断位
-    ////instruction[0..2]：跳转指令的标志
+    //instruction[0..2]：跳转指令的标志
 
     //A指令格式：0vvvvvvvvvvvvvvvvv（vv=xxx的15比特位值）
-    //ALUout的含义是ALU的输出结果
+    //outALU的含义是ALU的输出结果
 
-    //根据输入指令的第15位判断是否是A指令
+    //根据输入指令的第15位判断A指令或C指令
     //如果是A指令，即sel=instruction[15]==0,Mux instruction
     //如果是C指令，即sel=instruction[15]==1,Mux outALU 
     //inA的含义是Mux16的输出是A寄存器的输入
     Mux16(a=instruction , b=outALU , sel=instruction[15] , out=inA );
 
     //A寄存器逻辑
-    //如果是A指令，通过Not，TempselA==1，instruction[15]==0，Mux指令会选择Tempsela==1作为A寄存器的读写标志
+    //如果是A指令，instruction[15]==0,通过Not，TempselA==1,Mux指令会选择Tempsela==1作为A寄存器的读写标志
     //所以，如果是A指令，就会将其写入A寄存器
-    //如果是C指令，TempselA==0，instruction[15]==1，Mux指令会选择instruction[5]的值作为A寄存器的读写标志
+    //如果是C指令，instruction[15]==1，TempselA==0，Mux指令会选择instruction[5]的值作为A寄存器的读写标志
     //是否写入取决于instruction[5]的值，1就写入，0不写入
     Not(in=instruction[15] , out=TempselA );
-    
     Mux(a=TempselA , b=instruction[5] , sel=instruction[15] , out=selA );
-    Register(in=inA , load=selA , out=outA );
+    ARegister(in=inA , load=selA , out=outA,out[0..14]=addressM);
 
     //ALU的第二个输入是来自M还是A寄存器的判断
     //通过a位来选择，即instruction[12]
     Mux16(a=outA , b=inM , sel=instruction[12] , out=inALU );
 
+    //D寄存器的逻辑
     //ALU输入是否写入D寄存器的判断
-    Register(in=outALU , load=instruction[4] , out=outD );
+    And(a=instruction[15] , b=instruction[4] , out=DLoad );
+    DRegister(in=outALU , load=DLoad , out=outD );
 
     //ALU计算单元的逻辑
     ALU(x=outD , y=inALU , zx=instruction[11] , nx=instruction[10] , zy=instruction[9] , ny=instruction[8] , f=instruction[7] , no=instruction[6] , out=outALU , out=outM,zr=zr , ng=ng );
 
+    //是否写入M
+    //C指令并且instruction[3]=1
+    And(a=instruction[15] , b=instruction[3] , out=writeM );
+
+    //PC逻辑
     //计数器，取指令
-    PC(in= , load= , inc= , reset=reset , out= );
-    
-    
+    //如果jjj的构成是跳转标志
+    //还需要jump的各个组合和要求的结果相与之后的结果为1
+    //jjj为000，no jump
+    //jjj为001，那么还需要满足zr==0并且ng==0（＞0）
+    //jjj为010，那么还需要满足zr==1（=0）
+    //jjj为011，那么还需要满足ng==0（≥0）
+    //jjj为100，那么还需要满足ng==1（＜0）
+    //jjj为101，那么还需要满足zr==0（≠0）
+    //jjj为110，那么还需要满足zr==1或者ng=1（≤0）
+    //jjj为111，无条件跳转
+    //继续优化
+    //j1 j2 j3 
+    //如果j1为1的情况下，需要结果＜0即可跳转，那么j1 and zr =1 即满足
+    //如果j2为1的情况下，需要结果=0即可跳转，那么j2 and zg =1 即满足
+    //如果j3为1的情况下，需要结果＞0即可跳转，那么j3 and 代表正数的标志=1，即满足
+    //代表正数的标志设变量为positive，可以用not(or(nz,ng)取得，nz=ng=0的情况下，就是1
+
+    //建立一个正数的标志
+    Or(a=zr , b=ng , out=tempPositive );
+    Not(in=tempPositive , out=positive );
+    //ng=1代表＜0
+    //zr=1代表=0
+    //positive=1代表大于0
+    And(a=instruction[2] , b=ng , out=jumpNegative );
+    And(a=instruction[1] , b=zr , out=jumpZero );
+    And(a=instruction[0] , b=positive , out=jumpPositive );
+
+    //合并三个跳转条件
+    Or(a=jumpNegative , b=jumpZero , out=jumpNegOrZero );
+    Or(a=jumpNegOrZero , b=jumpPositive , out=jumpCondition );
+
+    //只有C指令才会跳转
+    And(a=instruction[15], b=jumpCondition, out=loadPC);
+    PC(in=outA , load=loadPC , inc=true , reset=reset , out[0..14]=pc );
+
 	//// Replace this comment with your code.
+}
