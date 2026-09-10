@@ -1,0 +1,77 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/5/CPU.hdl
+/**
+ * The Hack Central Processing unit (CPU).
+ * Parses the binary code in the instruction input and executes it according to the
+ * Hack machine language specification. In the case of a C-instruction, computes the
+ * function specified by the instruction. If the instruction specifies to read a memory
+ * value, the inM input is expected to contain this value. If the instruction specifies
+ * to write a value to the memory, sets the outM output to this value, sets the addressM
+ * output to the target address, and asserts the writeM output (when writeM = 0, any
+ * value may appear in outM).
+ * If the reset input is 0, computes the address of the next instruction and sets the
+ * pc output to that value. If the reset input is 1, sets pc to 0.
+ * Note: The outM and writeM outputs are combinational: they are affected by the
+ * instruction's execution during the current cycle. The addressM and pc outputs are
+ * clocked: although they are affected by the instruction's execution, they commit to
+ * their new values only in the next cycle.
+ */
+CHIP CPU {
+
+    IN  inM[16],         // M value input  (M = contents of RAM[A])
+        instruction[16], // Instruction for execution
+        reset;           // Signals whether to re-start the current
+                         // program (reset==1) or continue executing
+                         // the current program (reset==0).
+
+    OUT outM[16],        // M value output
+        writeM,          // Write to M? 
+        addressM[15],    // Address in data memory (of M)
+        pc[15];          // address of next instruction
+
+    PARTS:
+    //C指令格式：111 a cccccc ddd jjj
+    //instruction[15]：A指令还是C指令的判断位
+    //instruction[12]：ALU的第二个输入是来自M还是A寄存器的判断位
+    //instruction[6..11]：comp计算指令的标志
+    //instruction[5] ：ALU的输出是否写入A寄存器的判断位
+    //instruction[4] ：ALU的输出是否写入D寄存器的判断位
+    //instruction[3] ：ALU的输出是否写入M存储器的判断位
+    ////instruction[0..2]：跳转指令的标志
+
+    //A指令格式：0vvvvvvvvvvvvvvvvv（vv=xxx的15比特位值）
+    //ALUout的含义是ALU的输出结果
+
+    //根据输入指令的第15位判断是否是A指令
+    //如果是A指令，即sel=instruction[15]==0,Mux instruction
+    //如果是C指令，即sel=instruction[15]==1,Mux outALU 
+    //inA的含义是Mux16的输出是A寄存器的输入
+    Mux16(a=instruction , b=outALU , sel=instruction[15] , out=inA );
+
+    //A寄存器逻辑
+    //如果是A指令，通过Not，TempselA==1，instruction[15]==0，Mux指令会选择Tempsela==1作为A寄存器的读写标志
+    //所以，如果是A指令，就会将其写入A寄存器
+    //如果是C指令，TempselA==0，instruction[15]==1，Mux指令会选择instruction[5]的值作为A寄存器的读写标志
+    //是否写入取决于instruction[5]的值，1就写入，0不写入
+    Not(in=instruction[15] , out=TempselA );
+    
+    Mux(a=TempselA , b=instruction[5] , sel=instruction[15] , out=selA );
+    Register(in=inA , load=selA , out=outA );
+
+    //ALU的第二个输入是来自M还是A寄存器的判断
+    //通过a位来选择，即instruction[12]
+    Mux16(a=outA , b=inM , sel=instruction[12] , out=inALU );
+
+    //ALU输入是否写入D寄存器的判断
+    Register(in=outALU , load=instruction[4] , out=outD );
+
+    //ALU计算单元的逻辑
+    ALU(x=outD , y=inALU , zx=instruction[11] , nx=instruction[10] , zy=instruction[9] , ny=instruction[8] , f=instruction[7] , no=instruction[6] , out=outALU , out=outM,zr=zr , ng=ng );
+
+    //计数器，取指令
+    PC(in= , load= , inc= , reset=reset , out= );
+    
+    
+	//// Replace this comment with your code.
